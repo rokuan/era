@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/form_category_name"
+        android:padding="20px"
+        android:hint="Category name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <!-- <LinearLayout
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30px"
+        >
+    <rokuan.com.eranote.additionalviews.HeightSquareImageView
+        android:id="@+id/category_image"
+        android:background="#C3C3C3"
+        android:layout_width="wrap_content"
+        android:layout_height="256px" />
+        <Button
+            android:background="@drawable/button_drawable"
+            android:textColor="#FFFFFF"
+            android:drawableLeft="@android:drawable/ic_menu_gallery"
+            android:text="Browse ..."
+            android:layout_width="256px"
+            android:layout_height="wrap_content" />
+    </LinearLayout> -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <View
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+        <FrameLayout
+            android:layout_weight="3"
+            android:layout_width="wrap_content"
+            android:layout_height="0dip"
+            >
+            <RelativeLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <rokuan.com.eranote.additionalviews.HeightSquareImageView
+                    android:id="@+id/form_category_image"
+                    android:background="#C3C3C3"
+                    android:scaleType="fitCenter"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <Button
+                    android:id="@+id/form_category_browse_image"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/button_drawable"
+                    android:textColor="#FFFFFF"
+                    android:drawableLeft="@android:drawable/ic_menu_gallery"
+                    android:text="Browse ..."
+                    android:layout_width="256px"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </FrameLayout>
+        <View
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dip" />
+    </LinearLayout>
+</LinearLayout>

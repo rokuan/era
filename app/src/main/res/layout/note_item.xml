@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="150px">
+    <FrameLayout
+        android:descendantFocusability="blocksDescendants"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5px"
+        >
+        <LinearLayout
+            android:id="@+id/note_item_clickable"
+            android:orientation="vertical"
+            android:layout_margin="5px"
+            android:background="#FFFFFF"
+            android:padding="5px"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1">
+            <rokuan.com.eranote.additionalviews.HeightSquareImageView
+                android:id="@+id/note_item_category"
+                android:layout_margin="5dp"
+                android:background="#7F7F7F"
+                android:scaleType="fitCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <RelativeLayout
+                android:layout_marginLeft="5px"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/note_item_title"
+                    android:padding="5px"
+                    android:text="Note title"
+                    android:textColor="#000000"
+                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:id="@+id/note_item_separator"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#9200F4"
+                    android:layout_below="@+id/note_item_title"
+                    />
+                <TextView
+                    android:id="@+id/note_item_content"
+                    android:padding="5px"
+                    android:text="Note content"
+                    android:singleLine="false"
+                    android:ellipsize="marquee"
+                    android:textColor="#7F7F7F"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/note_item_separator"
+                    android:layout_alignParentBottom="true"
+                    />
+            </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/note_item_last_modif"
+                    android:textColor="@color/light_indigo"
+                    android:layout_width="0dip"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:id="@+id/note_item_attachments_layout"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+                    <rokuan.com.eranote.additionalviews.HeightSquareImageView
+                        android:src="@drawable/paper_clip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/note_item_attachments_size"
+                    android:textColor="@color/light_indigo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                </LinearLayout>
+                </LinearLayout>
+        </LinearLayout>
+
+        <ToggleButton
+            android:id="@+id/note_item_favorite"
+            android:textOff=""
+            android:textOn=""
+            android:background="@drawable/favorite_toggle_button"
+            android:layout_gravity="top|right"
+            android:layout_width="64px"
+            android:layout_height="64px"
+            />
+    </FrameLayout>
+</LinearLayout>
