@@ -2,9 +2,7 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scrollbars="none"
-    android:layout_weight="1">
+    android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -83,12 +81,21 @@
                     android:background="@android:color/darker_gray"/>
             </TableRow>
         </TableLayout>
-        <ExpandableListView
-            android:id="@+id/form_note_additional"
+        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_span="2" android:gravity="center_vertical">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="20px" android:layout_span="2" android:text="Attachments" />
+            <ImageButton
+                android:id="@+id/form_note_add_attachment"
+                android:src="@drawable/ic_action_new_attachment_holo_dark"
+                android:scaleType="fitCenter"
+                android:layout_width="64px"
+                android:layout_height="64px" />
+        </LinearLayout>
+        <ListView
+            android:id="@+id/form_note_attachments"
+            android:layout_margin="30px"
+            android:background="#373737"
             android:layout_width="match_parent"
-            android:layout_height="512px"
-            android:scrollbars="none"
-            >
-        </ExpandableListView>
+            android:layout_height="512px">
+        </ListView>
     </LinearLayout>
 </ScrollView>

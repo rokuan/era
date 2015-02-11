@@ -19,6 +19,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,10 +41,14 @@ public class NoteActivity extends ActionBarActivity implements View.OnClickListe
     private Spinner noteCategory;
     private ArrayAdapter<Category> categoryAdapter;
     private EditText noteContent;
-    private ExpandableListView expandableListView;
-    private AttachmentExpendableListAdapter attachmentAdapter;
+    //private ExpandableListView expandableListView;
+    //private AttachmentExpendableListAdapter attachmentAdapter;
+    private ListView attachmentsList;
+    private AttachmentListAdapter attachmentAdapter;
 
     private Note note;
+    private List<Attachment> attachmentsToAdd;
+    private List<Attachment> attachmentsToRemove;
 
     private boolean newElementMode = false;
     private boolean modified = false;
@@ -59,7 +64,7 @@ public class NoteActivity extends ActionBarActivity implements View.OnClickListe
 
         if(extras != null){
             if(extras.containsKey(EraSQLiteOpenHelper.NOTE_ID)) {
-                long noteId = extras.getLong(EraSQLiteOpenHelper.NOTE_ID);
+                int noteId = extras.getInt(EraSQLiteOpenHelper.NOTE_ID);
                 note = db.getNote(noteId);
             } else if(extras.containsKey("new")) {
                 if(extras.getBoolean("new")) {
@@ -76,15 +81,16 @@ public class NoteActivity extends ActionBarActivity implements View.OnClickListe
         noteTitle = (EditText)findViewById(R.id.form_note_title);
         noteCategory = (Spinner)findViewById(R.id.form_note_category);
         noteContent = (EditText)findViewById(R.id.form_note_content);
-        expandableListView = (ExpandableListView)findViewById(R.id.form_note_additional);
+        attachmentsList = (ListView)findViewById(R.id.form_note_attachments);
+        findViewById(R.id.form_note_add_attachment).setOnClickListener(this);
 
         List<Category> allCategories = db.queryCategories(null);
         categoryAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, allCategories);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        attachmentAdapter = new AttachmentExpendableListAdapter(this, "Attachments", note.getAttachments());
-        expandableListView.setAdapter(attachmentAdapter);
-        expandableListView.expandGroup(0);
+        //attachmentAdapter = new AttachmentExpendableListAdapter(this, "Attachments", note.getAttachments());
+        attachmentAdapter = new AttachmentListAdapter(this, R.layout.note_attachment_list_item, note.getAttachments());
+        attachmentsList.setAdapter(attachmentAdapter);
 
         noteTitle.setText(note.getTitle());
         noteContent.setText(note.getContent());
@@ -161,7 +167,8 @@ public class NoteActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.note_new_attachment:
+            //case R.id.note_new_attachment:
+            case R.id.form_note_add_attachment:
                 // TODO: ouvrir le file explorer
                 //Toast.makeText(this, "Adding an attachment [NOT IMPLEMENTED YET]", Toast.LENGTH_SHORT).show();
                 Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -187,216 +194,80 @@ public class NoteActivity extends ActionBarActivity implements View.OnClickListe
                     Attachment attachment = new Attachment(filePath);
                     attachment.setNote(note);
 
-                    if(newElementMode){
-
-                    } else {
-                        if (!db.addAttachment(attachment)) {
-                            // TODO: Dialog qui informe que le fichier est deja en piece jointe
-                            Toast.makeText(this, "Attachment exists already", Toast.LENGTH_SHORT).show();
-                        }
+                    if(note.getAttachments().contains(attachment)){
+                        // TODO: Dialog qui informe que le fichier est deja en piece jointe
+                        Toast.makeText(this, "Attachment exists already", Toast.LENGTH_SHORT).show();
+                        return;
                     }
 
-                    note.getAttachments().add(attachment);
-                    attachmentAdapter.notifyDataSetChanged();
+                    /*note.getAttachments().add(attachment);*/
+                    /*attachmentAdapter.notifyDataSetChanged();*/
+                    attachmentAdapter.add(attachment);
                 }
+                break;
         }
     }
 
-    /*class GridExpandableListAdapter extends BaseExpandableListAdapter {
-        class AttachmentAdapter extends ArrayAdapter<Attachment> {
-            private LayoutInflater inflater;
-            private List<Attachment> attachments;
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        db.close();
+    }
 
-            public AttachmentAdapter(Context context, int resource, List<Attachment> objects) {
-                super(context, resource, objects);
-                this.attachments = objects;
-                this.inflater = (LayoutInflater)context.getSystemService(LAYOUT_INFLATER_SERVICE);
-            }
-
-            @Override
-            public View getView (int position, View convertView, ViewGroup parent){
-                if(convertView == null) {
-                    convertView = inflater.inflate(R.layout.note_attachment, parent, false);
-                }
-                TextView fileName = (TextView)convertView.findViewById(R.id.note_attachment_name);
-                fileName.setText(getItem(position).getFileName());
-                return convertView;
-            }
-
-            @Override
-            public Attachment getItem(int position){
-                return attachments.get(position);
-            }
-        }
-
-        private Context context;
-        private String title;
-        private List<Attachment> attachments;
-        private GridView grid;
-
+    class AttachmentListAdapter extends ArrayAdapter<Attachment> {
         private LayoutInflater inflater;
+        //private List<Attachment> attachments;
 
-        public GridExpandableListAdapter(Context ctxt, int cols, String listTitle, List<Attachment> attachmentList){
-            this.context = ctxt;
-            this.title = listTitle;
-            this.attachments = attachmentList;
-            this.inflater = (LayoutInflater)context.getSystemService(LAYOUT_INFLATER_SERVICE);
+        public AttachmentListAdapter(Context context, int resource, List<Attachment> objects) {
+            super(context, resource, objects);
+            inflater = (LayoutInflater)context.getSystemService(LAYOUT_INFLATER_SERVICE);
+            //attachments = objects;
+        }
+
+        /*@Override
+        public void add(Attachment att){
+            attachments.add(att);
+            super.add(att);
         }
 
         @Override
-        public int getGroupCount() {
-            return 1;
+        public void remove(Attachment att){
+            attachments.remove(att);
+            super.remove(att);
         }
 
         @Override
-        public int getChildrenCount(int groupPosition) {
-            return 1;
-        }
-
-        @Override
-        public Object getGroup(int groupPosition) {
-            return title;
-        }
-
-        @Override
-        public Object getChild(int groupPosition, int childPosition) {
-            return attachments.get(childPosition);
-        }
-
-        @Override
-        public long getGroupId(int groupPosition) {
-            return 0;
-        }
-
-        @Override
-        public long getChildId(int groupPosition, int childPosition) {
-            return 0;
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return false;
-        }
-
-        @Override
-        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-            View v = inflater.inflate(R.layout.note_attachment_header, parent, false);
-            ImageButton addAttachment = (ImageButton)v.findViewById(R.id.note_new_attachment);
-            addAttachment.setOnClickListener(NoteActivity.this);
-            return v;
-        }
-
-        @Override
-        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-            if(convertView == null) {
-                convertView = inflater.inflate(R.layout.note_attachments_grid, null);
-            }
-
-            GridView gridConvert = (GridView)convertView;
-            gridConvert.setAdapter(new AttachmentAdapter(this.context, R.layout.note_attachment, this.attachments));
-            gridConvert.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    // TODO: open file
-                    Toast.makeText(context, "Opening file ...", Toast.LENGTH_SHORT).show();
-                }
-            });
-            gridConvert.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    // TODO: afficher le menu de suppression
-                    Toast.makeText(context, "Delete ?", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-            });
-
-            return convertView;
-        }
-
-        @Override
-        public boolean isChildSelectable(int groupPosition, int childPosition) {
-            return false;
-        }
-    }*/
-
-    class AttachmentExpendableListAdapter extends BaseExpandableListAdapter {
-        private Context context;
-        private String title;
-        private List<Attachment> attachments;
-
-        private LayoutInflater inflater;
-
-        public AttachmentExpendableListAdapter(Context ctxt, String listTitle, List<Attachment> attachmentList){
-            this.context = ctxt;
-            this.title = listTitle;
-            this.attachments = attachmentList;
-            this.inflater = (LayoutInflater)context.getSystemService(LAYOUT_INFLATER_SERVICE);
-        }
-
-        @Override
-        public int getGroupCount() {
-            return 1;
-        }
-
-        @Override
-        public int getChildrenCount(int groupPosition) {
+        public int getCount(){
             return attachments.size();
         }
 
         @Override
-        public Object getGroup(int groupPosition) {
-            return title;
-        }
+        public Attachment getItem(int position){
+            return attachments.get(position);
+        }*/
 
         @Override
-        public Object getChild(int groupPosition, int childPosition) {
-            return attachments.get(childPosition);
-        }
+        public View getView(int position, View convertView, ViewGroup parent){
+            View v = convertView;
 
-        @Override
-        public long getGroupId(int groupPosition) {
-            return groupPosition;
-        }
-
-        @Override
-        public long getChildId(int groupPosition, int childPosition) {
-            return ((Attachment)getChild(groupPosition, childPosition)).getId();
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return true;
-        }
-
-        @Override
-        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-            if(convertView == null) {
-                convertView = inflater.inflate(R.layout.note_attachment_header, parent, false);
+            if(v == null){
+                v = inflater.inflate(R.layout.note_attachment_list_item, parent, false);
             }
 
-            ImageButton addAttachment = (ImageButton)convertView.findViewById(R.id.note_new_attachment);
-            addAttachment.setOnClickListener(NoteActivity.this);
+            final Attachment attachment = this.getItem(position);
 
-            return convertView;
-        }
+            TextView attachmentName = (TextView)v.findViewById(R.id.note_attachment_list_name);
+            attachmentName.setText(attachment.getFileName());
 
-        @Override
-        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-            if(convertView == null) {
-                convertView = inflater.inflate(R.layout.note_attachment, parent, false);
-            }
+            ImageButton deleteAttachment = (ImageButton)v.findViewById(R.id.note_attachment_list_delete);
+            deleteAttachment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AttachmentListAdapter.this.remove(attachment);
+                }
+            });
 
-            Attachment attachment = (Attachment)getChild(groupPosition, childPosition);
-
-            TextView fileName = (TextView)convertView.findViewById(R.id.note_attachment_name);
-            fileName.setText(attachment.getFileName());
-
-            return convertView;
-        }
-
-        @Override
-        public boolean isChildSelectable(int groupPosition, int childPosition) {
-            return true;
+            return v;
         }
     }
 }

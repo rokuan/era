@@ -2,24 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
-
+    android:gravity="center_vertical">
     <rokuan.com.eranote.additionalviews.HeightSquareImageView
-        android:id="@+id/note_attachment_image"
+        android:id="@+id/note_attachment_list_image"
         android:src="@drawable/file_icon"
         android:scaleType="fitCenter"
         android:layout_width="wrap_content"
         android:layout_height="64px"
-        android:layout_margin="10px"
-        />
+        android:layout_margin="5px" />
     <TextView
-        android:id="@+id/note_attachment_name"
+        android:id="@+id/note_attachment_list_name"
         android:text="Textview for a note attachment item"
         android:layout_marginLeft="20px"
         android:layout_marginRight="20px"
         android:ellipsize="marquee"
         android:gravity="center_vertical"
         android:singleLine="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+    <ImageButton
+        android:id="@+id/note_attachment_list_delete"
+        android:src="@android:drawable/ic_menu_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5px" />
 </LinearLayout>

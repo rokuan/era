@@ -50,7 +50,7 @@ public class CategoryActivity extends ActionBarActivity implements View.OnClickL
 
         if(extras != null){
             if(extras.containsKey(EraSQLiteOpenHelper.CATEGORY_ID)) {
-                long categoryId = extras.getLong(EraSQLiteOpenHelper.CATEGORY_ID);
+                int categoryId = extras.getInt(EraSQLiteOpenHelper.CATEGORY_ID);
                 category = db.getCategory(categoryId);
             } else if(extras.containsKey("new")) {
                 if(extras.getBoolean("new")) {

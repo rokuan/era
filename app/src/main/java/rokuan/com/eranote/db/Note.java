@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Christophe on 17/01/2015.
  */
 public class Note {
-    private Long id;
+    private Integer id;
     private String title;
     private String content;
     private Category category;
@@ -32,11 +32,11 @@ public class Note {
         this.category = noteCategory;
     }*/
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -66,7 +66,7 @@ public class Note {
 
     public static Note buildFromCursor(Cursor result){
         Note n = new Note();
-        long noteId = result.getLong(0);
+        int noteId = result.getInt(0);
         String noteTitle = result.getString(1);
         String noteContent = result.getString(2);
         boolean noteFavorite = (result.getInt(4) != 0);

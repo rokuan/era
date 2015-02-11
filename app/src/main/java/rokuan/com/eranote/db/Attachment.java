@@ -8,7 +8,7 @@ import java.io.File;
  * Created by Christophe on 19/01/2015.
  */
 public class Attachment {
-    private Long id;
+    private Integer id = -1;
     private String filePath;
     private Note note;
 
@@ -20,11 +20,11 @@ public class Attachment {
         this.filePath = fPath;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -56,7 +56,7 @@ public class Attachment {
     public static Attachment buildFromCursor(Cursor cursor){
         Attachment att = new Attachment();
 
-        att.setId(cursor.getLong(0));
+        att.setId(cursor.getInt(0));
         att.setFilePath(cursor.getString(1));
 
         return att;
@@ -68,6 +68,17 @@ public class Attachment {
             return true;
         }
 
-        return ((o instanceof Attachment)) && (((Attachment)o).id == this.id);
+        if(!(o instanceof Attachment)){
+            return false;
+        }
+
+        Attachment att = (Attachment)o;
+        boolean sameNote = true;
+
+        if(att.getNote() != null && this.getNote() != null){
+            sameNote = att.getNote().equals(this.getNote());
+        }
+
+        return sameNote && att.filePath.equals(this.filePath);
     }
 }

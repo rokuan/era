@@ -1,30 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="1">
-        <TableRow>
-            <TextView android:padding="20px" android:text="Title" />
-            <TextView android:id="@+id/note_view_title" android:padding="20px" />
-        </TableRow>
-        <TableRow>
-            <View android:layout_span="2" android:background="#7F7F7F" android:layout_width="match_parent" android:layout_height="1dp" android:layout_margin="10px" />
-        </TableRow>
-        <TableRow>
-            <TextView android:padding="20px" android:text="Category" />
-            <TextView android:id="@+id/note_view_category" android:padding="20px" />
-        </TableRow>
-        <TableRow>
-            <View android:layout_span="2" android:background="#7F7F7F" android:layout_width="match_parent" android:layout_height="1dp" android:layout_margin="10px" />
-        </TableRow>
-        <TableRow>
-            <TextView android:id="@+id/note_view_content" android:layout_span="2" android:minHeight="256px" android:background="#C3C3C3" android:layout_height="wrap_content" android:padding="20px" />
-        </TableRow>
-        <TableRow>
-            <View android:layout_span="2" android:background="#7F7F7F" android:layout_width="match_parent" android:layout_height="1dp" android:layout_margin="10px" />
-        </TableRow>
-    </TableLayout>
-</LinearLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1">
+            <TableRow>
+                <TextView android:padding="20px" android:text="Title" />
+                <TextView android:id="@+id/note_view_title" android:padding="20px" />
+            </TableRow>
+            <TableRow>
+                <View android:layout_span="2" android:background="#7F7F7F" android:layout_width="match_parent" android:layout_height="1dp" android:layout_margin="10px" />
+            </TableRow>
+            <TableRow>
+                <TextView android:padding="20px" android:text="Category" />
+                <TextView android:id="@+id/note_view_category" android:padding="20px" />
+            </TableRow>
+            <TableRow>
+                <View android:layout_span="2" android:background="#7F7F7F" android:layout_width="match_parent" android:layout_height="1dp" android:layout_margin="10px" />
+            </TableRow>
+            <TableRow>
+                <TextView android:id="@+id/note_view_content" android:layout_span="2" android:minHeight="256px" android:background="#C3C3C3" android:layout_height="wrap_content" android:padding="20px" />
+            </TableRow>
+            <TableRow>
+                <View android:layout_span="2" android:background="#7F7F7F" android:layout_width="match_parent" android:layout_height="1dp" android:layout_margin="10px" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="20px" android:layout_span="2" android:text="Attachments" />
+        <GridView
+            android:id="@+id/note_view_attachments_grid"
+            android:layout_margin="30px"
+            android:background="#373737"
+            android:numColumns="3"
+            android:layout_width="match_parent"
+            android:layout_height="512px">
+
+        </GridView>
+    </LinearLayout>
+</ScrollView>

@@ -32,7 +32,10 @@ import rokuan.com.eranote.db.Category;
 import rokuan.com.eranote.db.EraSQLiteOpenHelper;
 import rokuan.com.eranote.db.Note;
 
-public class HomeActivity extends ActionBarActivity {
+/**
+ * Created by LEBEAU Christophe on 11/02/2015.
+ */
+public class HomeActivitySave extends ActionBarActivity {
     private ViewPager mViewPager;
     private EraPagerAdapter pagerAdapter;
 
@@ -299,19 +302,11 @@ public class HomeActivity extends ActionBarActivity {
         }
 
         @Override
-        public void onCreate(Bundle savedInstanceState){
-            super.onCreate(savedInstanceState);
-
-            db = new EraSQLiteOpenHelper(this.getActivity());
-            noteAdapter = new NoteAdapter(this.getActivity(), allNotes);
-
-            this.reloadData();
-        }
-
-        @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_index_notes, container, false);
             //Bundle args = getArguments();
+
+            this.reloadData();
 
             ListView notes = (ListView)rootView.findViewById(R.id.notes_list);
 
@@ -330,8 +325,20 @@ public class HomeActivity extends ActionBarActivity {
         }
 
         @Override
+        public void onAttach(Activity activity){
+            super.onAttach(activity);
+            db = new EraSQLiteOpenHelper(activity);
+            noteAdapter = new NoteAdapter(activity, allNotes);
+        }
+
+        @Override
         public void reloadData() {
             allNotes.clear();
+
+            if(db == null){
+                db = new EraSQLiteOpenHelper(this.getActivity());
+            }
+
             // TODO: inclure les futurs tris etc
             allNotes.addAll(db.queryNotes(null));
             noteAdapter.notifyDataSetChanged();
@@ -428,20 +435,15 @@ public class HomeActivity extends ActionBarActivity {
         }
 
         @Override
-        public void onCreate(Bundle savedInstanceState){
-            super.onCreate(savedInstanceState);
-
-            db = new EraSQLiteOpenHelper(this.getActivity());
-            categoryAdapter = new CategoryAdapter(this.getActivity(), allCategories);
-
-            this.reloadData();
-        }
-
-        @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_index_categories, container, false);
             // Bundle args = getArguments();
+            //EraSQLiteOpenHelper db = new EraSQLiteOpenHelper(this.getActivity());
+
+            this.reloadData();
+
             ListView categories = (ListView)rootView.findViewById(R.id.categories_list);
+            //allCategories = db.queryCategories(null);
 
             this.getActivity().registerForContextMenu(categories);
 
@@ -465,8 +467,25 @@ public class HomeActivity extends ActionBarActivity {
         }
 
         @Override
+        public void onAttach(Activity activity){
+            super.onAttach(activity);
+
+            if(db != null){
+                db.close();
+            }
+
+            db = new EraSQLiteOpenHelper(activity);
+            categoryAdapter = new CategoryAdapter(activity, allCategories);
+        }
+
+        @Override
         public void reloadData() {
             allCategories.clear();
+
+            if(db == null){
+                db = new EraSQLiteOpenHelper(this.getActivity());
+            }
+
             allCategories.addAll(db.queryCategories(null));
             categoryAdapter.notifyDataSetChanged();
         }
@@ -517,4 +536,3 @@ public class HomeActivity extends ActionBarActivity {
         }
     }
 }
-

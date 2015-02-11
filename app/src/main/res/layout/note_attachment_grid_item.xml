@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <rokuan.com.eranote.additionalviews.HeightSquareImageView
+        android:id="@+id/note_attachment_grid_image"
+        android:src="@drawable/file_icon"
+        android:scaleType="fitCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="64px"
+        android:layout_margin="10px"
+        />
+    <TextView
+        android:id="@+id/note_attachment_grid_name"
+        android:text="Textview for a note attachment item"
+        android:padding="20px"
+        android:ellipsize="marquee"
+        android:gravity="center_horizontal"
+        android:singleLine="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

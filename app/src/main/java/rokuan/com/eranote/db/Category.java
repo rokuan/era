@@ -8,7 +8,7 @@ import android.graphics.BitmapFactory;
  * Created by Christophe on 17/01/2015.
  */
 public class Category {
-    private Long id;
+    private Integer id;
     private String name;
     private String description;
     //private String imagePath;
@@ -26,11 +26,11 @@ public class Category {
         //this.imagePath = categoryImagePath;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -62,7 +62,7 @@ public class Category {
         Category cat = new Category();
         byte[] imgData;
 
-        cat.setId(result.getLong(0));
+        cat.setId(result.getInt(0));
         cat.setName(result.getString(1));
         cat.setDescription(result.getString(2));
         cat.setModifiable(result.getInt(4) != 0);

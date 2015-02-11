@@ -8,9 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import rokuan.com.eranote.R;
@@ -57,30 +59,29 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
             { CATEGORY_ID, CATEGORY_NAME, CATEGORY_DESCRIPTION }
     };*/
 
-    private static final String ATTACHMENT_QUERY = "CREATE TABLE " + tables[ATTACHMENTS] + "(" +
-            ATTACHMENT_ID + " LONG PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-            ATTACHMENT_PATH + " TEXT NOT NULL, " +
-            ATTACHMENT_NOTE + " LONG, " +
-            "FOREIGN KEY(" + ATTACHMENT_NOTE + ") REFERENCES " + tables[NOTES] + "(" + NOTE_ID + "), " +
-            "UNIQUE(" + ATTACHMENT_PATH + ", " + ATTACHMENT_NOTE + ")" +
-            ")";
     private static final String CATEGORY_QUERY = "CREATE TABLE " + tables[CATEGORIES] + "(" +
-            CATEGORY_ID + " LONG PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+            CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             CATEGORY_NAME + " TEXT UNIQUE NOT NULL, " +
             CATEGORY_DESCRIPTION + " TEXT, " +
             CATEGORY_IMAGE + " BLOB, " +
             CATEGORY_MODIFIABLE + " INTEGER" +
             ")";
     private static final String NOTE_QUERY = "CREATE TABLE " + tables[NOTES] + "(" +
-            NOTE_ID + " LONG PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+            NOTE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             NOTE_TITLE + " TEXT, " +
             NOTE_CONTENT + " TEXT, " +
-            NOTE_CATEGORY + " LONG, " +
+            NOTE_CATEGORY + " INTEGER, " +
             NOTE_FAVORITE + " INTEGER, " +
             NOTE_LAST_MODIF + " LONG, " +
             "FOREIGN KEY(" + NOTE_CATEGORY + ") REFERENCES " + tables[CATEGORIES] + "(" + CATEGORY_ID + ")" +
             ")";
-
+    private static final String ATTACHMENT_QUERY = "CREATE TABLE " + tables[ATTACHMENTS] + "(" +
+            ATTACHMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            ATTACHMENT_PATH + " TEXT NOT NULL, " +
+            ATTACHMENT_NOTE + " INTEGER, " +
+            "FOREIGN KEY(" + ATTACHMENT_NOTE + ") REFERENCES " + tables[NOTES] + "(" + NOTE_ID + "), " +
+            "UNIQUE(" + ATTACHMENT_PATH + ", " + ATTACHMENT_NOTE + ")" +
+            ")";
 
     public EraSQLiteOpenHelper(Context context){
         super(context, DB_NAME, null, DB_VERSION);
@@ -142,12 +143,14 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         values.put(NOTE_LAST_MODIF, new Date().getTime());
 
         long noteId = db.insert(tables[NOTES], null, values);
-        note.setId(noteId);
+        note.setId((int)noteId);
         db.close();
 
         // TODO: Demarrer transaction ?
         for(Attachment att: note.getAttachments()){
-            addAttachment(att);
+            if(att.getId() == -1) {
+                addAttachment(att);
+            }
         }
     }
 
@@ -161,11 +164,52 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         values.put(NOTE_FAVORITE, note.isFavorite());
         values.put(NOTE_LAST_MODIF, new Date().getTime());
 
-        db.update(tables[NOTES], values, NOTE_ID + " = ?", new String[]{ String.valueOf(note.getId()) });
+        db.update(tables[NOTES], values, NOTE_ID + " = ?", new String[]{String.valueOf(note.getId())});
+
+        StringBuilder idBuilder = null;
+
+        List<Attachment> newAttachments = new LinkedList<>();
+        List<Attachment> oldAttachments = new LinkedList<>();
+
+        for(Attachment att: note.getAttachments()){
+            if(att.getId() == -1) {
+                newAttachments.add(att);
+            } else {
+                oldAttachments.add(att);
+            }
+        }
+
+        if(oldAttachments.size() > 0){
+            for(Attachment oldAtt: oldAttachments) {
+                if(idBuilder == null){
+                    idBuilder = new StringBuilder();
+                } else {
+                    idBuilder.append(", ");
+                }
+
+                idBuilder.append(oldAtt.getId().toString());
+            }
+        }
+
+        String whereClause = ATTACHMENT_NOTE + " = ?";
+        String[] whereValues;
+
+        if (idBuilder == null) {
+            whereValues = new String[]{ note.getId().toString() };
+        } else {
+            whereClause += " AND " + ATTACHMENT_ID + " NOT IN (?)";
+            whereValues = new String[]{ note.getId().toString(), idBuilder.toString() };
+        }
+
+        db.delete(tables[ATTACHMENTS], whereClause, whereValues);
         db.close();
+
+        for(Attachment newAtt: newAttachments){
+            addAttachment(newAtt);
+        }
     }
 
-    public Note getNote(Long id){
+    public Note getNote(Integer id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor results = db.query(tables[NOTES], null, NOTE_ID + " = ?", new String[]{ String.valueOf(id) }, null, null, null);
         Note n = null;
@@ -173,7 +217,7 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         if(results.getCount() > 0) {
             results.moveToFirst();
 
-            long noteCategory = results.getLong(3);
+            int noteCategory = results.getInt(3);
             n = Note.buildFromCursor(results);
             Category cat = getCategory(noteCategory);
             n.setCategory(cat);
@@ -186,7 +230,7 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         return n;
     }
 
-    public List<Attachment> getNoteAttachments(Long noteId){
+    public List<Attachment> getNoteAttachments(Integer noteId){
         SQLiteDatabase db = this.getReadableDatabase();
         List<Attachment> attachments = new ArrayList<Attachment>();
         Cursor results = db.query(tables[ATTACHMENTS], null, ATTACHMENT_NOTE + " = ?", new String[]{ String.valueOf(noteId) }, null, null, null);
@@ -206,7 +250,7 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         return attachments;
     }
 
-    public boolean deleteNote(Long noteId){
+    public boolean deleteNote(Integer noteId){
         SQLiteDatabase db = this.getWritableDatabase();
         int result = db.delete(tables[NOTES], NOTE_ID + " = ?", new String[]{ String.valueOf(noteId) });
 
@@ -256,7 +300,7 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
 
             while(!results.isAfterLast()){
                 Note n = Note.buildFromCursor(results);
-                n.setCategory(getCategory(results.getLong(3)));
+                n.setCategory(getCategory(results.getInt(3)));
                 n.setAttachments(getNoteAttachments(n.getId()));
                 list.add(n);
 
@@ -312,7 +356,7 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Category getCategory(Long id){
+    public Category getCategory(Integer id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor results = db.query(tables[CATEGORIES], null, CATEGORY_ID + " = ?", new String[]{ String.valueOf(id) }, null, null, null);
         Category cat = null;
@@ -327,7 +371,7 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         return cat;
     }
 
-    public boolean deleteCategory(Long id){
+    public boolean deleteCategory(Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
         // TODO: ajouter le champ qui permet de savoir si une categorie peut etre supprimee
         int result = db.delete(tables[CATEGORIES], CATEGORY_ID + " = ? AND " + CATEGORY_MODIFIABLE + " = ?", new String[]{ String.valueOf(id), String.valueOf(1) });
@@ -407,18 +451,21 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         try {
             attId = db.insert(tables[ATTACHMENTS], null, values);
         }catch(Exception e){
+            Log.e("EraSQLite - Error", e.getMessage());
             result = false;
+        } finally {
+            db.close();
         }
 
-        db.close();
+        //db.close();
         return result && (attId != -1);
     }
 
-    public boolean deleteAttachment(Integer id){
+    /*public boolean deleteAttachment(Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
         int result = db.delete(tables[ATTACHMENTS], ATTACHMENT_ID + " = ?", new String[]{ String.valueOf(id) });
 
         db.close();
         return (result >= 1);
-    }
+    }*/
 }
