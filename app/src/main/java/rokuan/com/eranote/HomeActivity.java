@@ -68,6 +68,18 @@ public class HomeActivity extends ActionBarActivity {
     }
 
     @Override
+    public void onPause(){
+        db.close();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        db = new EraSQLiteOpenHelper(this);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_home, menu);
@@ -330,10 +342,26 @@ public class HomeActivity extends ActionBarActivity {
         }
 
         @Override
+        public void onPause(){
+            db.close();
+            super.onPause();
+        }
+
+        @Override
+        public void onResume(){
+            super.onResume();
+            db = new EraSQLiteOpenHelper(this.getActivity());
+        }
+
+        @Override
         public void reloadData() {
             allNotes.clear();
             // TODO: inclure les futurs tris etc
-            allNotes.addAll(db.queryNotes(null));
+            if(db == null){
+                db = new EraSQLiteOpenHelper(this.getActivity());
+            }
+            List<Note> matchingNotes = db.queryNotes(null);
+            allNotes.addAll(matchingNotes);
             noteAdapter.notifyDataSetChanged();
         }
 
@@ -462,6 +490,18 @@ public class HomeActivity extends ActionBarActivity {
             });
 
             return rootView;
+        }
+
+        @Override
+        public void onPause(){
+            db.close();
+            super.onPause();
+        }
+
+        @Override
+        public void onResume(){
+            super.onResume();
+            db = new EraSQLiteOpenHelper(this.getActivity());
         }
 
         @Override

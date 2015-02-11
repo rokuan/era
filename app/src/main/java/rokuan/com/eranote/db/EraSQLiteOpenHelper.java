@@ -197,8 +197,9 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         if (idBuilder == null) {
             whereValues = new String[]{ note.getId().toString() };
         } else {
-            whereClause += " AND " + ATTACHMENT_ID + " NOT IN (?)";
-            whereValues = new String[]{ note.getId().toString(), idBuilder.toString() };
+            String inArray = '(' + idBuilder.toString() + ')';
+            whereClause += " AND " + ATTACHMENT_ID + " NOT IN " + inArray;
+            whereValues = new String[]{ note.getId().toString() };
         }
 
         db.delete(tables[ATTACHMENTS], whereClause, whereValues);

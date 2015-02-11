@@ -75,6 +75,18 @@ public class CategoryActivity extends ActionBarActivity implements View.OnClickL
     }
 
     @Override
+    public void onPause(){
+        db.close();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        db = new EraSQLiteOpenHelper(this);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_category, menu);

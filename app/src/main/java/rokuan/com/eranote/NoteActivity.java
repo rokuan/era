@@ -176,7 +176,9 @@ public class NoteActivity extends ActionBarActivity implements View.OnClickListe
                 try {
                     startActivityForResult(fileIntent, Code.PICK_ATTACHMENT_RESULT_CODE);
                 } catch (ActivityNotFoundException e) {
-                    Log.e("Era - Note", "No activity can handle picking a file. Showing alternatives.");
+                    Toast.makeText(this, "No suitable application found to pick a file", Toast.LENGTH_SHORT).show();
+                    // TODO: afficher une dialog qui indique qu'il faut une application
+                    //Log.e("Era - Note", "No activity can handle picking a file. Showing alternatives.");
                 }
                 break;
         }
@@ -209,42 +211,24 @@ public class NoteActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     @Override
-    public void onDestroy(){
-        super.onDestroy();
+    public void onPause(){
         db.close();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        db = new EraSQLiteOpenHelper(this);
     }
 
     class AttachmentListAdapter extends ArrayAdapter<Attachment> {
         private LayoutInflater inflater;
-        //private List<Attachment> attachments;
 
         public AttachmentListAdapter(Context context, int resource, List<Attachment> objects) {
             super(context, resource, objects);
             inflater = (LayoutInflater)context.getSystemService(LAYOUT_INFLATER_SERVICE);
-            //attachments = objects;
         }
-
-        /*@Override
-        public void add(Attachment att){
-            attachments.add(att);
-            super.add(att);
-        }
-
-        @Override
-        public void remove(Attachment att){
-            attachments.remove(att);
-            super.remove(att);
-        }
-
-        @Override
-        public int getCount(){
-            return attachments.size();
-        }
-
-        @Override
-        public Attachment getItem(int position){
-            return attachments.get(position);
-        }*/
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent){

@@ -118,9 +118,15 @@ public class NoteViewActivity extends FaceActivity {
     }
 
     @Override
-    public void onDestroy(){
-        super.onDestroy();
+    public void onPause(){
         db.close();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        db = new EraSQLiteOpenHelper(this);
     }
 
     class AttachmentGridAdapter extends ArrayAdapter<Attachment> {

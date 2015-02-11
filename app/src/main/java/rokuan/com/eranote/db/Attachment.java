@@ -81,4 +81,9 @@ public class Attachment {
 
         return sameNote && att.filePath.equals(this.filePath);
     }
+
+    @Override
+    public String toString(){
+        return (this.id + "::" + this.filePath);
+    }
 }
