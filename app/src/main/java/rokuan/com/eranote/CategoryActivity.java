@@ -44,6 +44,9 @@ public class CategoryActivity extends ActionBarActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         db = new EraSQLiteOpenHelper(this);
 
         Bundle extras = this.getIntent().getExtras();

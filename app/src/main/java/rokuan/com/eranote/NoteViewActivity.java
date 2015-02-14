@@ -42,7 +42,7 @@ public class NoteViewActivity extends FaceActivity {
         this.setContentView(R.layout.activity_note_view);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         db = new EraSQLiteOpenHelper(this);
 

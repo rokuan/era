@@ -58,6 +58,9 @@ public class NoteActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
 
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         db = new EraSQLiteOpenHelper(this);
 
         Bundle extras = this.getIntent().getExtras();

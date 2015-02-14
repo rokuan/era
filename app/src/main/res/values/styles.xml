@@ -35,10 +35,13 @@
         parent="Widget.AppCompat.ActionBar">
         <item name="android:titleTextStyle">@style/ActionBarColor</item>
         <item name="android:background">@color/dark_indigo</item>
-
+        <item name="android:logo">@drawable/action_bar_logo</item>
+        <!-- <item name="android:icon">@drawable/era_note</item> -->
         <!-- Support library compatibility -->
         <item name="titleTextStyle">@style/ActionBarColor</item>
         <item name="background">@color/dark_indigo</item>
+        <item name="logo">@drawable/action_bar_logo</item>
+        <!-- <item name="icon">@drawable/era_note</item> -->
     </style>
     <style name="ActionBarColor" parent="@android:style/TextAppearance">
         <item name="android:textColor">#FFFFFF</item>

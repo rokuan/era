@@ -47,7 +47,7 @@ public class HomeActivity extends ActionBarActivity {
         this.setContentView(R.layout.activity_home);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         db = new EraSQLiteOpenHelper(this);
 
