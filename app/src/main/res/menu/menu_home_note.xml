@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/edit_note"
-        android:icon="@android:drawable/ic_menu_edit"
+        android:icon="@drawable/ic_menu_edit"
         android:title="Edit" />
 
     <item android:id="@+id/favorite_note"
-        android:icon="@android:drawable/star_big_off"
+        android:icon="@drawable/star_big_off"
         android:title="Set/remove as favorite" />
 
     <item android:id="@+id/delete_note"
-        android:icon="@android:drawable/ic_menu_delete"
+        android:icon="@drawable/ic_menu_delete"
         android:title="Delete" />
 </menu>
