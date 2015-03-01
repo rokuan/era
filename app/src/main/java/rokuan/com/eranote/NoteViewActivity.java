@@ -23,7 +23,8 @@ import rokuan.com.eranote.db.Note;
 import rokuan.com.eranote.help.implementation.FaceActivity;
 
 /**
- * Created by Christophe on 22/01/2015.
+ * An activity to view the content of a specific note
+ * @author Lebeau Christophe
  */
 public class NoteViewActivity extends FaceActivity {
     private Note note;

@@ -5,7 +5,8 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 /**
- * Created by Christophe on 19/01/2015.
+ * An square ImageView whose width equals its height
+ * @author Lebeau Christophe
  */
 public class HeightSquareImageView extends ImageView {
     public HeightSquareImageView(Context context) {

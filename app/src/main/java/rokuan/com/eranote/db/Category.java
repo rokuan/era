@@ -15,11 +15,20 @@ public class Category {
     private Bitmap image;
     private boolean modifiable;
 
+    /**
+     * Constructs an empty category
+     */
     public Category(){
 
     }
 
     //public Category(String categoryName, String categoryDescription, String categoryImagePath){
+
+    /**
+     * Constructs a category with a name and a description
+     * @param categoryName the category name
+     * @param categoryDescription the category description
+     */
     public Category(String categoryName, String categoryDescription){
         this.name = categoryName;
         this.description = categoryDescription;
@@ -58,6 +67,11 @@ public class Category {
         this.description = description;
     }
 
+    /**
+     * Builds a category from the given database cursor
+     * @param result the cursor to build the category from
+     * @return a new category whose fields are taken from the cursor values
+     */
     public static Category buildFromCursor(Cursor result){
         Category cat = new Category();
         byte[] imgData;

@@ -131,7 +131,10 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
-    // NOTES
+    /**
+     * Adds a new note into the database
+     * @param note  the note to be added
+     */
     public void addNote(Note note){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -154,6 +157,10 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Updates all the fields of an existing note according to its ID
+     * @param note the note to be updated
+     */
     public void updateNote(Note note){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -210,6 +217,11 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Retrieves the corresponding note by its id
+     * @param id the note id
+     * @return the note with the specified id
+     */
     public Note getNote(Integer id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor results = db.query(tables[NOTES], null, NOTE_ID + " = ?", new String[]{ String.valueOf(id) }, null, null, null);
@@ -231,6 +243,11 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         return n;
     }
 
+    /**
+     * Retrieve all the attachments for a given note id
+     * @param noteId the note id
+     * @return a list of the attachments linked to this note
+     */
     public List<Attachment> getNoteAttachments(Integer noteId){
         SQLiteDatabase db = this.getReadableDatabase();
         List<Attachment> attachments = new ArrayList<Attachment>();
@@ -251,6 +268,11 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         return attachments;
     }
 
+    /**
+     * Removes the corresponding note
+     * @param noteId the note id
+     * @return true if the note did exist, false otherwise
+     */
     public boolean deleteNote(Integer noteId){
         SQLiteDatabase db = this.getWritableDatabase();
         int result = db.delete(tables[NOTES], NOTE_ID + " = ?", new String[]{ String.valueOf(noteId) });
@@ -261,6 +283,11 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         return (result >= 1);
     }
 
+    /**
+     * Queries the notes whose fields equal the values in {@code values}. If {@code} is null, retrieves all the notes
+     * @param values the params to filter results
+     * @return a list of all the notes matching the specified params in {@code values}
+     */
     public List<Note> queryNotes(ContentValues values){
         SQLiteDatabase db = this.getReadableDatabase();
         String where = null;
@@ -314,7 +341,10 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    // CATEGORIES
+    /**
+     * Adds a new category into the database
+     * @param cat  the category to be added
+     */
     public void addCategory(Category cat){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -337,6 +367,10 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Updates all the fields of an existing category according to its ID
+     * @param cat the category to be updated
+     */
     public void updateCategory(Category cat){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -357,6 +391,11 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Retrieves the corresponding category by its id
+     * @param id the category id
+     * @return the category with the specified id
+     */
     public Category getCategory(Integer id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor results = db.query(tables[CATEGORIES], null, CATEGORY_ID + " = ?", new String[]{ String.valueOf(id) }, null, null, null);
@@ -372,6 +411,11 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         return cat;
     }
 
+    /**
+     * Removes the corresponding note
+     * @param id the note id
+     * @return true if the category existed, false otherwise
+     */
     public boolean deleteCategory(Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
         // TODO: ajouter le champ qui permet de savoir si une categorie peut etre supprimee
@@ -381,10 +425,19 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         return (result >= 1);
     }
 
+    /**
+     * Queries all the categories
+     * @return a list containing all the categories
+     */
     public List<Category> queryCategories(){
         return queryCategories(null);
     }
 
+    /**
+     * Queries the categories whose fields equal the values in {@code values}. If {@code values} is null, retrieves all the categories
+     * @param values the params to filter results
+     * @return a list of all the categories matching the specified params in {@code values}
+     */
     public List<Category> queryCategories(ContentValues values){
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder whereBuilder = null;
@@ -435,7 +488,11 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    // ATTACHMENTS
+    /**
+     * Adds a new attachment to the note denoted by {@code att}.getNote()
+     * @param att the attachment to be added
+     * @return true if this attachment was not already created, false otherwise
+     */
     public boolean addAttachment(Attachment att){
         if(att.getNote() == null){
             return false;

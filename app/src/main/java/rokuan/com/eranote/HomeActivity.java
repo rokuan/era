@@ -32,6 +32,9 @@ import rokuan.com.eranote.db.Category;
 import rokuan.com.eranote.db.EraSQLiteOpenHelper;
 import rokuan.com.eranote.db.Note;
 
+/**
+ * Main activity
+ */
 public class HomeActivity extends ActionBarActivity {
     private ViewPager mViewPager;
     private EraPagerAdapter pagerAdapter;
@@ -220,18 +223,30 @@ public class HomeActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * Starts a new activity to edit the note
+     * @param noteId the note id
+     */
     public void editNote(Integer noteId){
         Intent noteIntent = new Intent(this, NoteActivity.class);
         noteIntent.putExtra(EraSQLiteOpenHelper.NOTE_ID, noteId);
         this.startActivityForResult(noteIntent, Code.NOTE_EDIT_RESULT_CODE);
     }
 
-    public void consultNote(Integer noteId){
+    /**
+     * Starts a new activity which displays the content of a note
+     * @param noteId the note id
+     */
+    public void displayNote(Integer noteId){
         Intent noteIntent = new Intent(this, NoteViewActivity.class);
         noteIntent.putExtra(EraSQLiteOpenHelper.NOTE_ID, noteId);
         this.startActivityForResult(noteIntent, Code.NOTE_EDIT_RESULT_CODE);
     }
 
+    /**
+     * Starts a new activity to edit a category
+     * @param categoryId the category id
+     */
     public void editCategory(Integer categoryId){
         Intent categoryIntent = new Intent(this, CategoryActivity.class);
         categoryIntent.putExtra(EraSQLiteOpenHelper.CATEGORY_ID, categoryId);
@@ -334,7 +349,7 @@ public class HomeActivity extends ActionBarActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Note n = noteAdapter.getItem(position);
-                    ((HomeActivity)NoteFragment.this.getActivity()).consultNote(n.getId());
+                    ((HomeActivity)NoteFragment.this.getActivity()).displayNote(n.getId());
                 }
             });
 

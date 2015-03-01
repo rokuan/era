@@ -32,7 +32,8 @@ import rokuan.com.eranote.db.EraSQLiteOpenHelper;
 import rokuan.com.eranote.db.Note;
 
 /**
- * Created by Christophe on 18/01/2015.
+ * An activity to edit the content of a specific note
+ * @author Lebeau Christophe
  */
 public class NoteActivity extends ActionBarActivity implements View.OnClickListener {
     private EraSQLiteOpenHelper db;

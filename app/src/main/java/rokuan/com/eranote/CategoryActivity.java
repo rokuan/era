@@ -24,7 +24,8 @@ import rokuan.com.eranote.db.EraSQLiteOpenHelper;
 import rokuan.com.eranote.utils.Utils;
 
 /**
- * Created by Christophe on 18/01/2015.
+ * An activity which displays the content of a category
+ * @author Lebeau Christophe
  */
 public class CategoryActivity extends ActionBarActivity implements View.OnClickListener {
     private EraSQLiteOpenHelper db;

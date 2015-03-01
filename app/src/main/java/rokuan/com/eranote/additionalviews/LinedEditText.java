@@ -10,7 +10,7 @@ import android.widget.EditText;
 import rokuan.com.eranote.R;
 
 /**
- * Created by Christophe on 20/01/2015.
+ * An EditText with painted lines
  */
 public class LinedEditText extends EditText {
     private Rect mRect;

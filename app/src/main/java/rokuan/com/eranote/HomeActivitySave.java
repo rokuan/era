@@ -212,12 +212,20 @@ public class HomeActivitySave extends ActionBarActivity {
         }
     }
 
+    /**
+     * Starts a new activity to edit the specified note
+     * @param noteId the note id
+     */
     public void editNote(Integer noteId){
         Intent noteIntent = new Intent(this, NoteActivity.class);
         noteIntent.putExtra(EraSQLiteOpenHelper.NOTE_ID, noteId);
         this.startActivityForResult(noteIntent, Code.NOTE_EDIT_RESULT_CODE);
     }
 
+    /**
+     *
+     * @param noteId
+     */
     public void consultNote(Integer noteId){
         Intent noteIntent = new Intent(this, NoteViewActivity.class);
         noteIntent.putExtra(EraSQLiteOpenHelper.NOTE_ID, noteId);
@@ -318,7 +326,7 @@ public class HomeActivitySave extends ActionBarActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Note n = noteAdapter.getItem(position);
-                    ((HomeActivity)NoteFragment.this.getActivity()).consultNote(n.getId());
+                    ((HomeActivitySave)NoteFragment.this.getActivity()).consultNote(n.getId());
                 }
             });
 

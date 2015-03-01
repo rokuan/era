@@ -5,17 +5,25 @@ import android.database.Cursor;
 import java.io.File;
 
 /**
- * Created by Christophe on 19/01/2015.
+ * A note attachment
+ * @author Lebeau Christophe
  */
 public class Attachment {
     private Integer id = -1;
     private String filePath;
     private Note note;
 
+    /**
+     * Constructs an empty attachment
+     */
     public Attachment(){
 
     }
 
+    /**
+     * Constructs an attachment for the file denoted by its path
+     * @param fPath the file path
+     */
     public Attachment(String fPath){
         this.filePath = fPath;
     }
@@ -53,6 +61,11 @@ public class Attachment {
         this.note = note;
     }
 
+    /**
+     * Builds an attachment from the specified cursor
+     * @param cursor the database cursor to build the attachment from
+     * @return an attachment filled with the fields in {@code cursor}
+     */
     public static Attachment buildFromCursor(Cursor cursor){
         Attachment att = new Attachment();
 

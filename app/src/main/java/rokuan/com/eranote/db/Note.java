@@ -18,10 +18,18 @@ public class Note {
     private boolean favorite;
     private Date lastModified;
 
+    /**
+     * Constructs an empty note
+     */
     public Note(){
 
     }
 
+    /**
+     * Constructs a note with a title and a content
+     * @param noteTitle the note title
+     * @param noteContent the note content
+     */
     public Note(String noteTitle, String noteContent){
         this.title = noteTitle;
         this.content = noteContent;
@@ -64,19 +72,24 @@ public class Note {
         this.category = category;
     }
 
+    /**
+     * Builds a new note from the given database cursor
+     * @param result the database cursor to build the note from
+     * @return a new note with its fields taken from the cursor columns
+     */
     public static Note buildFromCursor(Cursor result){
         Note n = new Note();
         int noteId = result.getInt(0);
         String noteTitle = result.getString(1);
         String noteContent = result.getString(2);
         boolean noteFavorite = (result.getInt(4) != 0);
-        Date noteLastModif = new Date(result.getLong(5));
+        Date noteLastModification = new Date(result.getLong(5));
 
         n.setId(noteId);
         n.setTitle(noteTitle);
         n.setContent(noteContent);
         n.setFavorite(noteFavorite);
-        n.setLastModified(noteLastModif);
+        n.setLastModified(noteLastModification);
 
         return n;
     }

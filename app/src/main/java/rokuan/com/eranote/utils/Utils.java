@@ -9,6 +9,11 @@ import java.io.ByteArrayOutputStream;
  * Created by Christophe on 19/01/2015.
  */
 public class Utils {
+    /**
+     * Returns the bitmap pixel data
+     * @param bmp the bitmap object
+     * @return a byte array or null if {@code bmp} is null
+     */
     public static byte[] getBitmapData(Bitmap bmp){
         if(bmp == null){
             return null;
@@ -23,10 +28,22 @@ public class Utils {
         return outputStream.toByteArray();
     }
 
+    /**
+     * Returns a 256x256-scaled bitmap of {@code bmp}
+     * @param bmp
+     * @return a scaled bitmap
+     */
     public static Bitmap getScaledBitmap(Bitmap bmp){
         return getScaledBitmap(bmp, 256, 256);
     }
 
+    /**
+     * Returns a {@code newWidth}x{@code newHeight} copy of {@code bmp}
+     * @param bmp
+     * @param newWidth
+     * @param newHeight
+     * @return a scaled bitmap
+     */
     public static Bitmap getScaledBitmap(Bitmap bmp, int newWidth, int newHeight){
         int width = bmp.getWidth();
         int height = bmp.getHeight();

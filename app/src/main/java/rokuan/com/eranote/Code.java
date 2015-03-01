@@ -1,7 +1,7 @@
 package rokuan.com.eranote;
 
 /**
- * Created by Christophe on 22/01/2015.
+ * @author Lebeau Christophe
  */
 public class Code {
     public static final int PICK_ATTACHMENT_RESULT_CODE = 0;
