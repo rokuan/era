@@ -12,7 +12,7 @@
             android:orientation="vertical" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:stretchColumns="1">
             <TableRow
-                android:padding="10px" android:minHeight="64px" android:gravity="center_vertical">
+                android:padding="5dp" android:minHeight="40dp" android:gravity="center_vertical">
                 <TextView
                     android:text="Title"
                     android:gravity="center_vertical"
@@ -26,13 +26,13 @@
             <TableRow>
                 <View
                     android:layout_span="2"
-                    android:layout_margin="5px"
+                    android:layout_margin="5dp"
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"/>
             </TableRow>
-            <TableRow android:minHeight="64px" android:gravity="center_vertical"
-                android:padding="10px">
+            <TableRow android:minHeight="40dp" android:gravity="center_vertical"
+                android:padding="5dp">
                 <TextView
                     android:text="Category"
                     android:gravity="center_vertical"
@@ -49,23 +49,23 @@
             <TableRow>
                 <View
                     android:layout_span="2"
-                    android:layout_margin="5px"
+                    android:layout_margin="5dp"
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"/>
             </TableRow>
             <TableRow
-                android:padding="10px">
+                android:padding="5dp">
                 <TextView android:text="Content" android:layout_span="2" />
             </TableRow>
             <TableRow
-                android:padding="10px">
+                android:padding="5dp">
                 <rokuan.com.eranote.additionalviews.LinedEditText
                     android:id="@+id/form_note_content"
                     android:background="#FFFFFF"
                     android:textCursorDrawable="@null"
                     android:textColor="#000000"
-                    android:padding="10px"
+                    android:padding="5dp"
                     android:singleLine="false"
                     android:lines="5"
                     android:layout_span="2"
@@ -75,27 +75,27 @@
             <TableRow>
                 <View
                     android:layout_span="2"
-                    android:layout_margin="5px"
+                    android:layout_margin="5dp"
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"/>
             </TableRow>
         </TableLayout>
         <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_span="2" android:gravity="center_vertical">
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="20px" android:layout_span="2" android:text="Attachments" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="15dp" android:layout_span="2" android:text="Attachments" />
             <ImageButton
                 android:id="@+id/form_note_add_attachment"
                 android:src="@drawable/ic_action_new_attachment_holo_dark"
                 android:scaleType="fitCenter"
-                android:layout_width="64px"
-                android:layout_height="64px" />
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
         </LinearLayout>
         <ListView
             android:id="@+id/form_note_attachments"
-            android:layout_margin="30px"
+            android:layout_margin="15dp"
             android:background="#373737"
             android:layout_width="match_parent"
-            android:layout_height="512px">
+            android:layout_height="400dp">
         </ListView>
     </LinearLayout>
 </ScrollView>

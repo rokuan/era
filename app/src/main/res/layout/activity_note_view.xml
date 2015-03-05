@@ -11,35 +11,35 @@
             android:layout_height="wrap_content"
             android:stretchColumns="1">
             <TableRow>
-                <TextView android:padding="20px" android:text="Title" />
-                <TextView android:id="@+id/note_view_title" android:padding="20px" />
+                <TextView android:padding="15dp" android:text="Title" />
+                <TextView android:id="@+id/note_view_title" android:padding="15dp" />
             </TableRow>
             <TableRow>
-                <View android:layout_span="2" android:background="#7F7F7F" android:layout_width="match_parent" android:layout_height="1dp" android:layout_margin="10px" />
+                <View android:layout_span="2" android:background="#7F7F7F" android:layout_width="match_parent" android:layout_height="1dp" android:layout_margin="5dp" />
             </TableRow>
             <TableRow>
-                <TextView android:padding="20px" android:text="Category" />
-                <TextView android:id="@+id/note_view_category" android:padding="20px" />
+                <TextView android:padding="15dp" android:text="Category" />
+                <TextView android:id="@+id/note_view_category" android:padding="15dp" />
             </TableRow>
             <TableRow>
-                <View android:layout_span="2" android:background="#7F7F7F" android:layout_width="match_parent" android:layout_height="1dp" android:layout_margin="10px" />
+                <View android:layout_span="2" android:background="#7F7F7F" android:layout_width="match_parent" android:layout_height="1dp" android:layout_margin="5dp" />
             </TableRow>
             <TableRow>
-                <TextView android:id="@+id/note_view_content" android:layout_span="2" android:minHeight="256px" android:background="#C3C3C3" android:layout_height="wrap_content" android:padding="20px" />
+                <TextView android:id="@+id/note_view_content" android:layout_span="2" android:minHeight="180dp" android:background="#C3C3C3" android:layout_height="wrap_content" android:padding="15dp" />
             </TableRow>
             <TableRow>
-                <View android:layout_span="2" android:background="#7F7F7F" android:layout_width="match_parent" android:layout_height="1dp" android:layout_margin="10px" />
+                <View android:layout_span="2" android:background="#7F7F7F" android:layout_width="match_parent" android:layout_height="1dp" android:layout_margin="5dp" />
             </TableRow>
         </TableLayout>
 
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="20px" android:layout_span="2" android:text="Attachments" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="15dp" android:layout_span="2" android:text="Attachments" />
         <GridView
             android:id="@+id/note_view_attachments_grid"
-            android:layout_margin="30px"
+            android:layout_margin="20dp"
             android:background="#373737"
             android:numColumns="3"
             android:layout_width="match_parent"
-            android:layout_height="512px">
+            android:layout_height="400dp">
 
         </GridView>
     </LinearLayout>

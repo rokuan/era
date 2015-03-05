@@ -9,13 +9,13 @@
         android:src="@drawable/file_icon"
         android:scaleType="fitCenter"
         android:layout_width="wrap_content"
-        android:layout_height="64px"
-        android:layout_margin="10px"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"
         />
     <TextView
         android:id="@+id/note_attachment_grid_name"
         android:text="Textview for a note attachment item"
-        android:padding="20px"
+        android:padding="15dp"
         android:ellipsize="marquee"
         android:gravity="center_horizontal"
         android:singleLine="true"

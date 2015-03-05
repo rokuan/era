@@ -5,7 +5,7 @@
 
     <EditText
         android:id="@+id/form_category_name"
-        android:padding="20px"
+        android:padding="15dp"
         android:hint="Category name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -66,7 +66,7 @@
                     android:textColor="#FFFFFF"
                     android:drawableLeft="@android:drawable/ic_menu_gallery"
                     android:text="Browse ..."
-                    android:layout_width="256px"
+                    android:layout_width="180dp"
                     android:layout_height="wrap_content" />
             </RelativeLayout>
         </FrameLayout>

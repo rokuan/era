@@ -48,15 +48,15 @@
     </style>
 
     <style name="BrowseButton">
-        <item name="android:layout_margin">0px</item>
+        <item name="android:layout_margin">0dp</item>
     </style>
 
     <!-- TOGGLE -->
     <style name="CleanToggleButton">
         <item name="android:textOn"></item>
         <item name="android:textOff"></item>
-        <item name="android:padding">0px</item>
-        <item name="android:layout_margin">0px</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:layout_margin">0dp</item>
     </style>
 
     <style name="FavoriteNote" parent="CleanToggleButton">
