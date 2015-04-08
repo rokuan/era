@@ -72,8 +72,8 @@ public class HomeActivity extends ActionBarActivity {
 
     @Override
     public void onPause(){
-        db.close();
         super.onPause();
+        db.close();
     }
 
     @Override
@@ -183,9 +183,6 @@ public class HomeActivity extends ActionBarActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        /*if (data == null)
-            return;*/
-
         switch (requestCode) {
             case Code.NOTE_EDIT_RESULT_CODE:
                 switch(resultCode) {
@@ -194,28 +191,29 @@ public class HomeActivity extends ActionBarActivity {
                             // TODO: raffraichir l'element modifie
                             //ListView notesList = (ListView) this.findViewById(R.id.notes_list);
                             //ArrayAdapter notesAdapter = (ArrayAdapter) notesList.getAdapter();
-                            Fragment notesFragment = ((EraPagerAdapter)mViewPager.getAdapter()).getItem(NOTES_PAGE);
-                            ((PagerFragment)notesFragment).reloadData();
+                            /*Fragment notesFragment = ((EraPagerAdapter)mViewPager.getAdapter()).getItem(NOTES_PAGE);
+                            ((PagerFragment)notesFragment).reloadData();*/
                             //notesAdapter.notifyDataSetChanged();
                         }
                         break;
                 }
                 break;
+
             case Code.CATEGORY_EDIT_RESULT_CODE:
                 switch(resultCode) {
                     case RESULT_OK:
                         if (data.getBooleanExtra("result", false)) {
                             //ListView categoriesList = (ListView) this.findViewById(R.id.categories_list);
                             //ArrayAdapter categoriesAdapter = (ArrayAdapter) categoriesList.getAdapter();
-                            Fragment categoriesFragment = ((EraPagerAdapter)mViewPager.getAdapter()).getItem(CATEGORIES_PAGE);
-                            ((PagerFragment)categoriesFragment).reloadData();
+                            /*Fragment categoriesFragment = ((EraPagerAdapter)mViewPager.getAdapter()).getItem(CATEGORIES_PAGE);
+                            ((PagerFragment)categoriesFragment).reloadData();*/
                             //categoriesAdapter.notifyDataSetChanged();
 
                             // TODO: raffraichir l'element modifie et les notes liees, creer une fonction pour refresh
                             //ListView notesList = (ListView) this.findViewById(R.id.notes_list);
                             //ArrayAdapter notesAdapter = (ArrayAdapter) notesList.getAdapter();
-                            Fragment notesFragment = ((EraPagerAdapter)mViewPager.getAdapter()).getItem(NOTES_PAGE);
-                            ((PagerFragment)notesFragment).reloadData();
+                            /*Fragment notesFragment = ((EraPagerAdapter)mViewPager.getAdapter()).getItem(NOTES_PAGE);
+                            ((PagerFragment)notesFragment).reloadData();*/
                         }
                         break;
                 }
@@ -275,33 +273,6 @@ public class HomeActivity extends ActionBarActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // Create fragment object
-            /*Fragment fragment = null;
-
-            switch(position){
-                case NOTES_PAGE:
-                    fragment = new NoteFragment();
-                    break;
-                case CATEGORIES_PAGE:
-                    fragment = new CategoryFragment();
-                    break;
-
-                default:
-                    fragment = new NoteFragment();
-                    break;
-            }
-
-            // Attach some data to the fragment
-            // that we'll use to populate our fragment layouts
-            Bundle args = new Bundle();
-            args.putInt("page_position", position + 1);
-
-            // Set the arguments on the fragment
-            // that will be fetched in the
-            // DemoFragment@onCreateView
-            fragment.setArguments(args);
-
-            return fragment;*/
             return fragments.get(position);
         }
 
@@ -329,16 +300,12 @@ public class HomeActivity extends ActionBarActivity {
         public void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
 
-            db = new EraSQLiteOpenHelper(this.getActivity());
             noteAdapter = new NoteAdapter(this.getActivity(), allNotes);
-
-            this.reloadData();
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_index_notes, container, false);
-            //Bundle args = getArguments();
 
             ListView notes = (ListView)rootView.findViewById(R.id.notes_list);
 
@@ -358,23 +325,22 @@ public class HomeActivity extends ActionBarActivity {
 
         @Override
         public void onPause(){
-            db.close();
             super.onPause();
+            db.close();
         }
 
         @Override
         public void onResume(){
             super.onResume();
             db = new EraSQLiteOpenHelper(this.getActivity());
+            this.reloadData();
         }
 
         @Override
         public void reloadData() {
             allNotes.clear();
             // TODO: inclure les futurs tris etc
-            if(db == null){
-                db = new EraSQLiteOpenHelper(this.getActivity());
-            }
+
             List<Note> matchingNotes = db.queryNotes(null);
             allNotes.addAll(matchingNotes);
             noteAdapter.notifyDataSetChanged();
@@ -474,16 +440,12 @@ public class HomeActivity extends ActionBarActivity {
         public void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
 
-            db = new EraSQLiteOpenHelper(this.getActivity());
             categoryAdapter = new CategoryAdapter(this.getActivity(), allCategories);
-
-            this.reloadData();
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_index_categories, container, false);
-            // Bundle args = getArguments();
             ListView categories = (ListView)rootView.findViewById(R.id.categories_list);
 
             this.getActivity().registerForContextMenu(categories);
@@ -509,14 +471,15 @@ public class HomeActivity extends ActionBarActivity {
 
         @Override
         public void onPause(){
-            db.close();
             super.onPause();
+            db.close();
         }
 
         @Override
         public void onResume(){
             super.onResume();
             db = new EraSQLiteOpenHelper(this.getActivity());
+            this.reloadData();
         }
 
         @Override

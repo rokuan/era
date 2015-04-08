@@ -227,9 +227,7 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         Cursor results = db.query(tables[NOTES], null, NOTE_ID + " = ?", new String[]{ String.valueOf(id) }, null, null, null);
         Note n = null;
 
-        if(results.getCount() > 0) {
-            results.moveToFirst();
-
+        if(results.moveToFirst()){
             int noteCategory = results.getInt(3);
             n = Note.buildFromCursor(results);
             Category cat = getCategory(noteCategory);
@@ -244,7 +242,7 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Retrieve all the attachments for a given note id
+     * Retrieves all the attachments for a given note id
      * @param noteId the note id
      * @return a list of the attachments linked to this note
      */
@@ -253,9 +251,8 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         List<Attachment> attachments = new ArrayList<Attachment>();
         Cursor results = db.query(tables[ATTACHMENTS], null, ATTACHMENT_NOTE + " = ?", new String[]{ String.valueOf(noteId) }, null, null, null);
 
-        if(results.getCount() > 0){
+        if(results.moveToFirst()){
             attachments = new ArrayList<Attachment>(results.getCount());
-            results.moveToFirst();
 
             while(!results.isAfterLast()){
                 attachments.add(Attachment.buildFromCursor(results));
@@ -322,8 +319,7 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         Cursor results = db.query(tables[NOTES], null, where, args, null, null, null);
         ArrayList<Note> list = new ArrayList<Note>();
 
-        if(results.getCount() > 0){
-            results.moveToFirst();
+        if(results.moveToFirst()){
             list = new ArrayList<Note>(results.getCount());
 
             while(!results.isAfterLast()){
@@ -401,8 +397,7 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         Cursor results = db.query(tables[CATEGORIES], null, CATEGORY_ID + " = ?", new String[]{ String.valueOf(id) }, null, null, null);
         Category cat = null;
 
-        if(results.getCount() > 0) {
-            results.moveToFirst();
+        if(results.moveToFirst()){
             cat = Category.buildFromCursor(results);
         }
 
@@ -473,8 +468,7 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         Cursor results = db.query(tables[CATEGORIES], null, where, args, null, null, null);
         ArrayList<Category> list = new ArrayList<Category>();
 
-        if(results.getCount() > 0){
-            results.moveToFirst();
+        if(results.moveToFirst()){
             list = new ArrayList<Category>(results.getCount());
 
             while(!results.isAfterLast()){
