@@ -113,6 +113,24 @@ public class NoteActivity extends ActionBarActivity implements View.OnClickListe
             }
         });
 
+        int totalItemsHeight = 0;
+        int itemsCount = attachmentAdapter.getCount();
+
+        for (int itemPos = 0; itemPos < itemsCount; itemPos++) {
+            View item = attachmentAdapter.getView(itemPos, null, attachmentsList);
+            item.measure(0, 0);
+            totalItemsHeight += item.getMeasuredHeight();
+        }
+
+        // Get total height of all item dividers.
+        int totalDividersHeight = attachmentsList.getDividerHeight() * (itemsCount - 1);
+
+        // Set list height.
+        ViewGroup.LayoutParams params = attachmentsList.getLayoutParams();
+        params.height = totalItemsHeight + totalDividersHeight;
+        attachmentsList.setLayoutParams(params);
+        attachmentsList.requestLayout();
+
         if(note.getCategory() == null){
             try {
                 noteCategory.setSelection(0);

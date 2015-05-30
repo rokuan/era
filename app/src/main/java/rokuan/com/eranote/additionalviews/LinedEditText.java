@@ -51,9 +51,9 @@ public class LinedEditText extends EditText {
     @Override
     protected void onDraw(Canvas canvas) {
         int height = getHeight();
-        int line_height = getLineHeight();
+        int lineHeight = getLineHeight();
 
-        int count = height / line_height;
+        int count = height / lineHeight;
 
         if (getLineCount() > count)
             count = getLineCount();//for long text with scrolling
@@ -62,7 +62,7 @@ public class LinedEditText extends EditText {
         Paint paint = mPaint;
         int baseline = getLineBounds(0, r);//first line
 
-        for (int i = 0; i < count; i++) {
+        for (int i=0; i<count; i++) {
             canvas.drawLine(r.left, baseline + 1, r.right, baseline + 1, paint);
             baseline += getLineHeight();//next line
         }
