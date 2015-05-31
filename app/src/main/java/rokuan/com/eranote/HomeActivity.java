@@ -253,11 +253,6 @@ public class HomeActivity extends ActionBarActivity {
 
     class EraPagerAdapter extends FragmentPagerAdapter {
         private Context context;
-        /*private String[] titles = {
-                "NOTES",
-                "CATEGORIES",
-                //"PARAMETERS"
-        };*/
         private String[] titles;
         private List<PagerFragment> fragments = new ArrayList<PagerFragment>();
 

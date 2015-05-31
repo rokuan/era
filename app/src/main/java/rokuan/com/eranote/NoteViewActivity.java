@@ -119,6 +119,11 @@ public class NoteViewActivity extends FaceActivity {
     }
 
     @Override
+    public void onBackPressed(){
+        this.finish();
+    }
+
+    @Override
     public void onPause(){
         db.close();
         super.onPause();
