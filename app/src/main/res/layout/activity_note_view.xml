@@ -11,14 +11,22 @@
             android:layout_height="wrap_content"
             android:stretchColumns="1">
             <TableRow>
-                <TextView android:textStyle="bold" android:textColor="@color/indigo" android:padding="15dp" android:text="Title" />
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="@color/indigo"
+                    android:padding="15dp"
+                    android:text="@string/note_title_attribute" />
                 <TextView android:id="@+id/note_view_title" android:padding="15dp" />
             </TableRow>
             <TableRow>
                 <View android:layout_span="2" android:background="#7F7F7F" android:layout_width="match_parent" android:layout_height="1dp" android:layout_margin="5dp" />
             </TableRow>
             <TableRow>
-                <TextView android:textStyle="bold" android:textColor="@color/indigo" android:padding="15dp" android:text="Category" />
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="@color/indigo"
+                    android:padding="15dp"
+                    android:text="@string/note_category_attribute" />
                 <TextView android:id="@+id/note_view_category" android:padding="15dp" />
             </TableRow>
             <TableRow>
@@ -32,14 +40,19 @@
             </TableRow>
         </TableLayout>
 
-        <TextView android:textStyle="bold" android:textColor="@color/indigo" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="15dp" android:layout_span="2" android:text="Attachments" />
-        <GridView
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/indigo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_span="2"
+            android:text="@string/note_attachments_attribute" />
+        <rokuan.com.eranote.additionalviews.WrappingGridView
             android:id="@+id/note_view_attachments_grid"
             android:layout_margin="20dp"
             android:numColumns="3"
             android:layout_width="match_parent"
-            android:layout_height="400dp">
-
-        </GridView>
+            android:layout_height="256dp"></rokuan.com.eranote.additionalviews.WrappingGridView>
     </LinearLayout>
 </ScrollView>

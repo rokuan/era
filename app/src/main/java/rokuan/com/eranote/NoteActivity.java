@@ -5,7 +5,9 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,15 +37,13 @@ import rokuan.com.eranote.db.Note;
  * An activity to edit the content of a specific note
  * @author Lebeau Christophe
  */
-public class NoteActivity extends ActionBarActivity implements View.OnClickListener {
+public class NoteActivity extends AppCompatActivity implements View.OnClickListener {
     private EraSQLiteOpenHelper db;
 
     private EditText noteTitle;
     private Spinner noteCategory;
     private ArrayAdapter<Category> categoryAdapter;
     private EditText noteContent;
-    //private ExpandableListView expandableListView;
-    //private AttachmentExpendableListAdapter attachmentAdapter;
     private ListView attachmentsList;
     private AttachmentListAdapter attachmentAdapter;
 
@@ -113,23 +113,7 @@ public class NoteActivity extends ActionBarActivity implements View.OnClickListe
             }
         });
 
-        int totalItemsHeight = 0;
-        int itemsCount = attachmentAdapter.getCount();
-
-        for (int itemPos = 0; itemPos < itemsCount; itemPos++) {
-            View item = attachmentAdapter.getView(itemPos, null, attachmentsList);
-            item.measure(0, 0);
-            totalItemsHeight += item.getMeasuredHeight();
-        }
-
-        // Get total height of all item dividers.
-        int totalDividersHeight = attachmentsList.getDividerHeight() * (itemsCount - 1);
-
-        // Set list height.
-        ViewGroup.LayoutParams params = attachmentsList.getLayoutParams();
-        params.height = totalItemsHeight + totalDividersHeight;
-        attachmentsList.setLayoutParams(params);
-        attachmentsList.requestLayout();
+        refreshListViewHeight();
 
         if(note.getCategory() == null){
             try {
@@ -227,6 +211,7 @@ public class NoteActivity extends ActionBarActivity implements View.OnClickListe
                     /*note.getAttachments().add(attachment);*/
                     /*attachmentAdapter.notifyDataSetChanged();*/
                     attachmentAdapter.add(attachment);
+                    refreshListViewHeight();
                 }
                 break;
         }
@@ -275,5 +260,25 @@ public class NoteActivity extends ActionBarActivity implements View.OnClickListe
 
             return v;
         }
+    }
+
+    private void refreshListViewHeight(){
+        int totalItemsHeight = 0;
+        int itemsCount = attachmentAdapter.getCount();
+
+        for (int itemPos = 0; itemPos < itemsCount; itemPos++) {
+            View item = attachmentAdapter.getView(itemPos, null, attachmentsList);
+            item.measure(0, 0);
+            totalItemsHeight += item.getMeasuredHeight();
+        }
+
+        // Get total height of all item dividers.
+        int totalDividersHeight = attachmentsList.getDividerHeight() * (itemsCount - 1);
+
+        // Set list height.
+        ViewGroup.LayoutParams params = attachmentsList.getLayoutParams();
+        params.height = totalItemsHeight + totalDividersHeight;
+        attachmentsList.setLayoutParams(params);
+        attachmentsList.requestLayout();
     }
 }

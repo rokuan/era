@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Era - Note</string>
+    <string-array name="pager_titles">
+        <item>NOTES</item>
+        <item>CATEGORIES</item>
+    </string-array>
+    <string name="title_section1">Notes</string>
+    <string name="title_section2">Catégories</string>
+    <string name="title_section3">Paramètres</string>
+
+    <string name="welcome_note_title">Bienvenue</string>
+    <string name="welcome_note_content">Ravi de vous rencontrer !</string>
+    <string name="welcome_category_name">Note</string>
+    <string name="welcome_category_description">Simple note</string>
+
+    <string name="note_title_attribute">Titre</string>
+    <string name="note_category_attribute">Catégorie</string>
+    <string name="note_content_attribute">Contenu</string>
+    <string name="note_attachments_attribute">Pièces jointes</string>
+
+    <string name="category_name_attribute">Nom</string>
+    <string name="category_browse_icon">Parcourir ...</string>
+
+    <string name="action_settings">Paramètres</string>
+    <string name="action_new">Nouveau</string>
+    <string name="action_save">Enregistrer</string>
+    <string name="action_cancel">Annuler</string>
+    <string name="action_edit">Editer</string>
+</resources>

@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Era - Note</string>
+    <string-array name="pager_titles">
+        <item>NOTES</item>
+        <item>CATEGORIES</item>
+    </string-array>
     <string name="title_section1">Notes</string>
     <string name="title_section2">Categories</string>
     <string name="title_section3">Parameters</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_example">Example action</string>
+    <string name="welcome_note_title">Welcome</string>
+    <string name="welcome_note_content">Nice to meet you !</string>
+    <string name="welcome_category_name">Note</string>
+    <string name="welcome_category_description">Basic note</string>
+
+    <string name="note_title_attribute">Title</string>
+    <string name="note_category_attribute">Category</string>
+    <string name="note_content_attribute">Content</string>
+    <string name="note_attachments_attribute">Attachments</string>
+
+    <string name="category_name_attribute">Name</string>
+    <string name="category_browse_icon">Browse ...</string>
+
     <string name="action_settings">Settings</string>
     <string name="action_new">New</string>
     <string name="action_save">Save</string>

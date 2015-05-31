@@ -94,7 +94,7 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL(NOTE_QUERY);
         db.execSQL(ATTACHMENT_QUERY);
 
-        Category cat = new Category("Note", "Basic note");
+        Category cat = new Category(this.context.getString(R.string.welcome_category_name), this.context.getString(R.string.welcome_category_description));
         Bitmap categoryBitmap = BitmapFactory.decodeResource(this.context.getResources(), R.drawable.memo);
         byte[] bmpData = Utils.getBitmapData(categoryBitmap);
 
@@ -110,7 +110,7 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
 
         long catId = db.insert(tables[CATEGORIES], null, values);
 
-        Note note = new Note("Welcome", "Nice to meet you !");
+        Note note = new Note(this.context.getString(R.string.welcome_note_title), this.context.getString(R.string.welcome_note_content));
         values = new ContentValues();
 
         values.put(NOTE_TITLE, note.getTitle());
@@ -272,9 +272,9 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
      */
     public boolean deleteNote(Integer noteId){
         SQLiteDatabase db = this.getWritableDatabase();
-        int result = db.delete(tables[NOTES], NOTE_ID + " = ?", new String[]{ String.valueOf(noteId) });
+        int result = db.delete(tables[NOTES], NOTE_ID + " = ?", new String[]{String.valueOf(noteId)});
 
-        db.delete(tables[ATTACHMENTS], ATTACHMENT_NOTE + " = ?", new String[]{ String.valueOf(noteId) });
+        db.delete(tables[ATTACHMENTS], ATTACHMENT_NOTE + " = ?", new String[]{String.valueOf(noteId)});
 
         db.close();
         return (result >= 1);
@@ -383,7 +383,7 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
             img.recycle();
         }
 
-        db.update(tables[CATEGORIES], values, CATEGORY_ID + " = ?", new String[]{ String.valueOf(cat.getId()) });
+        db.update(tables[CATEGORIES], values, CATEGORY_ID + " = ?", new String[]{String.valueOf(cat.getId())});
         db.close();
     }
 
@@ -404,6 +404,23 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         results.close();
         db.close();
         return cat;
+    }
+
+    /**
+     * Checks whether or not a category with the specified name does exist in the database
+     * @param categoryName the category name
+     * @return true if present, false otherwise
+     */
+    public boolean categoryExists(String categoryName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        boolean exists;
+        Cursor results = db.query(tables[CATEGORIES], null, CATEGORY_NAME + " = ?", new String[]{ categoryName }, null, null, null);
+
+        exists = results.moveToFirst();
+
+        results.close();
+        db.close();
+        return exists;
     }
 
     /**

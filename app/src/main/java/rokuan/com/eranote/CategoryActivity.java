@@ -106,11 +106,19 @@ public class CategoryActivity extends ActionBarActivity implements View.OnClickL
                     // TODO: afficher une alert dialog
                     Toast.makeText(this, "Please name the category", Toast.LENGTH_SHORT).show();
                 } else {
+                    String oldName = category.getName();
+                    String newName = category.getName();
+
                     category.setName(categoryName.getText().toString());
                     try {
                         category.setImage(((BitmapDrawable)categoryImage.getDrawable()).getBitmap());
                     }catch(Exception e){
-                        Log.e("Era - Notes (Category bitmap)", e.getMessage());
+                        Log.e("Era (Category bitmap)", e.getMessage());
+                    }
+
+                    if(!oldName.equals(newName) && db.categoryExists(category.getName())){
+                        Toast.makeText(this, "Name already exists", Toast.LENGTH_SHORT).show();
+                        return true;
                     }
 
                     if(newElementMode){

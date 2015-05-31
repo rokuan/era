@@ -15,32 +15,40 @@
             android:layout_height="wrap_content"
             app:met_floatingLabel="highlight"
             app:met_primaryColor="@color/indigo"
-            app:met_floatingLabelText="Title"
+            app:met_floatingLabelText="@string/note_title_attribute"
+            android:hint="@string/note_title_attribute"
             />
         <fr.ganfra.materialspinner.MaterialSpinner
             android:id="@+id/form_note_category"
-            app:ms_floatingLabelText="Category"
+            app:ms_floatingLabelText="@string/note_category_attribute"
             app:ms_baseColor="@color/light_indigo"
             app:ms_highlightColor="@color/indigo"
             app:ms_arrowColor="@color/dark_indigo"
             app:ms_arrowSize="16dp"
-            android:layout_margin="5dp"
             app:ms_floatingLabelColor="@color/dark_indigo"
+            android:layout_margin="5dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
-        <TextView android:textColor="@color/indigo" android:textSize="12sp" android:padding="5dp" android:text="Content" android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/indigo"
+            android:textSize="12sp"
+            android:padding="5dp"
+            android:text="@string/note_content_attribute"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <rokuan.com.eranote.additionalviews.LinedEditText
             android:id="@+id/form_note_content"
             android:gravity="top|left"
             android:textColor="#000000"
             android:textCursorDrawable="@null"
             android:padding="5dp"
+            android:minLines="1"
+            android:background="@null"
             android:singleLine="false"
-            android:lines="5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical">
-            <TextView android:textColor="@color/indigo" android:textSize="12sp" android:layout_width="0dp" android:layout_height="wrap_content" android:padding="5dp" android:layout_weight="1" android:text="Attachments" />
+            <TextView android:textColor="@color/indigo" android:textSize="12sp" android:layout_width="0dp" android:layout_height="wrap_content" android:padding="5dp" android:layout_weight="1" android:text="@string/note_attachments_attribute" />
             <ImageButton
                 android:id="@+id/form_note_add_attachment"
                 android:src="@drawable/ic_action_new_attachment"

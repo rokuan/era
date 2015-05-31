@@ -54,7 +54,7 @@ public class HomeActivity extends ActionBarActivity {
 
         db = new EraSQLiteOpenHelper(this);
 
-        pagerAdapter = new EraPagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new EraPagerAdapter(getSupportFragmentManager(), this);
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setOnPageChangeListener(
@@ -252,16 +252,20 @@ public class HomeActivity extends ActionBarActivity {
     }
 
     class EraPagerAdapter extends FragmentPagerAdapter {
-        private final String[] titles = {
+        private Context context;
+        /*private String[] titles = {
                 "NOTES",
                 "CATEGORIES",
                 //"PARAMETERS"
-        };
+        };*/
+        private String[] titles;
         private List<PagerFragment> fragments = new ArrayList<PagerFragment>();
 
-        public EraPagerAdapter(FragmentManager fm){
+        public EraPagerAdapter(FragmentManager fm, Context c){
             super(fm);
 
+            context = c;
+            titles = context.getResources().getStringArray(R.array.pager_titles);
             fragments.add(new NoteFragment());
             fragments.add(new CategoryFragment());
         }
