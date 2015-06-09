@@ -54,7 +54,7 @@
                     android:dropDownSelector="@color/light_indigo"
                     android:spinnerMode="dropdown"
                     ></Spinner> -->
-                <fr.ganfra.materialspinner.MaterialSpinner
+                <!-- <fr.ganfra.materialspinner.MaterialSpinner
                     android:id="@+id/form_note_category"
                     app:ms_floatingLabelText="Category"
                     app:ms_baseColor="@color/light_indigo"
@@ -63,7 +63,7 @@
                     app:ms_arrowSize="16dp"
                     app:ms_floatingLabelColor="@color/dark_indigo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content" /> -->
             </TableRow>
             <TableRow>
                 <View

@@ -22,12 +22,15 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rey.material.widget.Spinner;
+
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import rokuan.com.eranote.db.Attachment;
 import rokuan.com.eranote.db.Category;
 import rokuan.com.eranote.db.EraSQLiteOpenHelper;
@@ -40,11 +43,16 @@ import rokuan.com.eranote.db.Note;
 public class NoteActivity extends AppCompatActivity implements View.OnClickListener {
     private EraSQLiteOpenHelper db;
 
-    private EditText noteTitle;
-    private Spinner noteCategory;
+    @InjectView(R.id.form_note_title) protected EditText noteTitle;
+    @InjectView(R.id.form_note_category) protected Spinner noteCategory;
+    @InjectView(R.id.form_note_content) protected EditText noteContent;
+    @InjectView(R.id.form_note_attachments) protected ListView attachmentsList;
+
+    //private EditText noteTitle;
+    //private Spinner noteCategory;
     private ArrayAdapter<Category> categoryAdapter;
-    private EditText noteContent;
-    private ListView attachmentsList;
+    //private EditText noteContent;
+    //private ListView attachmentsList;
     private AttachmentListAdapter attachmentAdapter;
 
     private Note note;
@@ -82,10 +90,8 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
             // TODO: an error occurred
         }
 
-        noteTitle = (EditText)findViewById(R.id.form_note_title);
-        noteCategory = (Spinner)findViewById(R.id.form_note_category);
-        noteContent = (EditText)findViewById(R.id.form_note_content);
-        attachmentsList = (ListView)findViewById(R.id.form_note_attachments);
+        ButterKnife.inject(this);
+
         findViewById(R.id.form_note_add_attachment).setOnClickListener(this);
 
         List<Category> allCategories = db.queryCategories(null);
@@ -100,7 +106,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
         noteContent.setText(note.getContent());
 
         noteCategory.setAdapter(categoryAdapter);
-        noteCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        /*noteCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Category cat = categoryAdapter.getItem(position);
@@ -110,6 +116,14 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });*/
+        noteCategory.setOnItemClickListener(new Spinner.OnItemClickListener() {
+            @Override
+            public boolean onItemClick(Spinner spinner, View view, int i, long l) {
+                Category cat = categoryAdapter.getItem(i);
+                note.setCategory(cat);
+                return true;
             }
         });
 

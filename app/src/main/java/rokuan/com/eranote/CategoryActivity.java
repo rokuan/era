@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +20,9 @@ import android.widget.Toast;
 
 import java.io.InputStream;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 import rokuan.com.eranote.db.Category;
 import rokuan.com.eranote.db.EraSQLiteOpenHelper;
 import rokuan.com.eranote.utils.Utils;
@@ -27,12 +31,13 @@ import rokuan.com.eranote.utils.Utils;
  * An activity which displays the content of a category
  * @author Lebeau Christophe
  */
-public class CategoryActivity extends ActionBarActivity implements View.OnClickListener {
+public class CategoryActivity extends AppCompatActivity {
+        //implements View.OnClickListener
     private EraSQLiteOpenHelper db;
 
-    private EditText categoryName;
-    private ImageView categoryImage;
-    private Button browseImage;
+    @InjectView(R.id.form_category_name) protected EditText categoryName;
+    @InjectView(R.id.form_category_image) protected ImageView categoryImage;
+    @InjectView(R.id.form_category_browse_image) protected Button browseImage;
 
     private Category category;
 
@@ -68,14 +73,12 @@ public class CategoryActivity extends ActionBarActivity implements View.OnClickL
             // TODO: an error occurred
         }
 
-        categoryName = (EditText)findViewById(R.id.form_category_name);
-        categoryImage = (ImageView)findViewById(R.id.form_category_image);
-        browseImage = (Button)findViewById(R.id.form_category_browse_image);
+        ButterKnife.inject(this);
 
         categoryName.setText(category.getName());
         categoryImage.setImageBitmap(category.getImage());
 
-        browseImage.setOnClickListener(this);
+        //browseImage.setOnClickListener(this);
     }
 
     @Override
@@ -147,7 +150,16 @@ public class CategoryActivity extends ActionBarActivity implements View.OnClickL
         this.setResult(Activity.RESULT_OK, resultIntent);
     }
 
-    @Override
+    @OnClick(R.id.form_category_browse_image)
+    public void browseImage(){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        this.startActivityForResult(intent, Code.PICK_CATEGORY_IMAGE_RESULT_CODE);
+    }
+
+    /*@Override
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.form_category_browse_image:
@@ -158,7 +170,7 @@ public class CategoryActivity extends ActionBarActivity implements View.OnClickL
                 this.startActivityForResult(intent, Code.PICK_CATEGORY_IMAGE_RESULT_CODE);
                 break;
         }
-    }
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

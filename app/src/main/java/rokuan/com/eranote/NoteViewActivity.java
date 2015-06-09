@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import rokuan.com.eranote.db.Attachment;
 import rokuan.com.eranote.db.EraSQLiteOpenHelper;
 import rokuan.com.eranote.db.Note;
@@ -29,10 +31,10 @@ import rokuan.com.eranote.help.implementation.FaceActivity;
 public class NoteViewActivity extends FaceActivity {
     private Note note;
 
-    private TextView noteTitle;
-    private TextView noteCategory;
-    private TextView noteContent;
-    private GridView noteAttachmentsGrid;
+    @InjectView(R.id.note_view_title) protected TextView noteTitle;
+    @InjectView(R.id.note_view_category) protected TextView noteCategory;
+    @InjectView(R.id.note_view_content) protected TextView noteContent;
+    @InjectView(R.id.note_view_attachments_grid) protected GridView noteAttachmentsGrid;
 
     private boolean modified = false;
     private EraSQLiteOpenHelper db;
@@ -47,10 +49,7 @@ public class NoteViewActivity extends FaceActivity {
 
         db = new EraSQLiteOpenHelper(this);
 
-        noteTitle = (TextView)findViewById(R.id.note_view_title);
-        noteCategory = (TextView)findViewById(R.id.note_view_category);
-        noteContent = (TextView)findViewById(R.id.note_view_content);
-        noteAttachmentsGrid = (GridView)findViewById(R.id.note_view_attachments_grid);
+        ButterKnife.inject(this);
 
         reloadNoteAndFields();
     }

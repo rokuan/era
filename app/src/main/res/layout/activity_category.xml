@@ -4,44 +4,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:id="@+id/form_category_name"
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:met_floatingLabel="highlight"
-        app:met_primaryColor="@color/indigo"
-        app:met_floatingLabelText="@string/category_name_attribute"
+    <com.rey.material.widget.EditText
         android:hint="@string/category_name_attribute"
-        />
-    <!-- <EditText
-        android:id="@+id/form_category_name"
         android:layout_margin="10dp"
-        android:padding="10dp"
-        android:hint="Category name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" /> -->
-    <!-- <LinearLayout
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
+        style="@style/Material.Widget.EditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="30px"
-        >
-    <rokuan.com.eranote.additionalviews.HeightSquareImageView
-        android:id="@+id/category_image"
-        android:background="#C3C3C3"
-        android:layout_width="wrap_content"
-        android:layout_height="256px" />
-        <Button
-            android:background="@drawable/button_drawable"
-            android:textColor="#FFFFFF"
-            android:drawableLeft="@android:drawable/ic_menu_gallery"
-            android:text="Browse ..."
-            android:layout_width="256px"
-            android:layout_height="wrap_content" />
-    </LinearLayout> -->
+        app:et_inputId="@+id/form_category_name"
+        app:et_labelTextSize="@dimen/label_size"
+        app:et_labelTextColor="@color/dark_indigo"
+        app:et_dividerColor="@color/light_indigo"
+        app:et_labelEnable="true" />
     <LinearLayout
         android:orientation="vertical"
         android:gravity="center_horizontal"

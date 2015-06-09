@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,7 +36,7 @@ import rokuan.com.eranote.db.Note;
 /**
  * Main activity
  */
-public class HomeActivity extends ActionBarActivity {
+public class HomeActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private EraPagerAdapter pagerAdapter;
 
