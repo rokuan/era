@@ -2,6 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_margin="10dp"
+            android:scaleType="fitCenter"
+            android:layout_width="90dp"
+            android:layout_height="90dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+            <TextView
+                android:padding="5dp"
+                android:text="Titre"
+                android:textColor="#000000"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:lines="3"
+                android:padding="5dp"
+                android:textColor="#777777"
+                android:text="Contenu du message ojqnf jl qfjnq jfnq jkfjn qiknjfk qjfn kqjfhnj kqjf kqlfjnqlkjfopqlfjgnikuhebg jkfn qkjfn jqkfn jqhbf"
+                android:ellipsize="end"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
+</LinearLayout>
+    <!-- <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="110dp">
     <FrameLayout
         android:descendantFocusability="blocksDescendants"
@@ -103,4 +145,4 @@
             android:layout_height="40dp"
             />
     </FrameLayout>
-</LinearLayout>
+</LinearLayout> -->

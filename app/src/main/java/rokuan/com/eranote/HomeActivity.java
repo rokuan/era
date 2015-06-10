@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -87,6 +91,35 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_home, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(newText != null){
+                    try {
+                        NoteFragment frag = ((NoteFragment) pagerAdapter.getItem(NOTES_PAGE));
+                        NoteFragment.NoteAdapter adapter = frag.getAdapter();
+                        Filter filter = adapter.getFilter();
+                        filter.filter(newText);
+                    }catch(Exception e){
+                        //Log.e("SearchView query", e.toString());
+                        e.printStackTrace();
+                    }
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -299,8 +332,13 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
+            //setRetainInstance(true);
+        }
 
-            noteAdapter = new NoteAdapter(this.getActivity(), allNotes);
+        @Override
+        public void onAttach(Activity activity){
+            super.onAttach(activity);
+            noteAdapter = new NoteAdapter(activity, allNotes);
         }
 
         @Override
@@ -336,12 +374,16 @@ public class HomeActivity extends AppCompatActivity {
             this.reloadData();
         }
 
+        public NoteAdapter getAdapter(){
+            return noteAdapter;
+        }
+
         @Override
         public void reloadData() {
             allNotes.clear();
             // TODO: inclure les futurs tris etc
 
-            List<Note> matchingNotes = db.queryNotes(null);
+            List<Note> matchingNotes = db.queryNotes("");
             allNotes.addAll(matchingNotes);
             noteAdapter.notifyDataSetChanged();
         }
@@ -349,6 +391,7 @@ public class HomeActivity extends AppCompatActivity {
         class NoteAdapter extends ArrayAdapter<Note> {
             private List<Note> all;
             private LayoutInflater inflater;
+            private Filter filter;
 
             public NoteAdapter(Context context, List<Note> objects) {
                 this(context, R.layout.note_item, objects);
@@ -362,13 +405,13 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
-                View v;
+                View v = convertView;
                 final Note n = all.get(position);
 
                 if(convertView == null){
-                    v = inflater.inflate(R.layout.note_item, parent, false);
-                } else {
-                    v = convertView;
+                    //v = inflater.inflate(R.layout.note_item, parent, false);
+                    //v = inflater.inflate(R.layout.note_item, parent, false);
+                    v = inflater.inflate(R.layout.note_item_old, parent, false);
                 }
 
                 TextView noteTitleText = (TextView) v.findViewById(R.id.note_item_title);
@@ -424,6 +467,40 @@ public class HomeActivity extends AppCompatActivity {
             public int getCount(){
                 return all.size();
             }
+
+            @Override
+            public Filter getFilter() {
+                if(filter == null) {
+                    filter = new Filter() {
+                        @Override
+                        protected FilterResults performFiltering(CharSequence constraint) {
+                            FilterResults filterResults = new FilterResults();
+
+                            if (constraint != null) {
+                                List<Note> notes = db.queryNotes(constraint.toString());
+                                filterResults.values = notes;
+                                filterResults.count = notes.size();
+                            }
+
+                            return filterResults;
+                        }
+
+                        @Override
+                        protected void publishResults(CharSequence constraint, FilterResults results) {
+                            all.clear();
+
+                            if (results != null && results.count > 0) {
+                                all.addAll((List<Note>) results.values);
+                                notifyDataSetChanged();
+                            } else {
+                                notifyDataSetInvalidated();
+                            }
+                        }
+                    };
+                }
+
+                return filter;
+            }
         }
     }
 
@@ -439,7 +516,6 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
-
             categoryAdapter = new CategoryAdapter(this.getActivity(), allCategories);
         }
 
@@ -494,11 +570,7 @@ public class HomeActivity extends AppCompatActivity {
             private LayoutInflater inflater;
 
             public CategoryAdapter(Context context, List<Category> objects) {
-                this(context, R.layout.note_item, objects);
-            }
-
-            public CategoryAdapter(Context context, int resource, List<Category> objects) {
-                super(context, resource, objects);
+                super(context, R.layout.note_item, objects);
                 inflater = (LayoutInflater)context.getSystemService(LAYOUT_INFLATER_SERVICE);
                 all = objects;
             }

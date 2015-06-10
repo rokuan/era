@@ -146,7 +146,7 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         values.put(NOTE_LAST_MODIF, new Date().getTime());
 
         long noteId = db.insert(tables[NOTES], null, values);
-        note.setId((int)noteId);
+        note.setId((int) noteId);
         db.close();
 
         // TODO: Demarrer transaction ?
@@ -249,7 +249,7 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
     public List<Attachment> getNoteAttachments(Integer noteId){
         SQLiteDatabase db = this.getReadableDatabase();
         List<Attachment> attachments = new ArrayList<Attachment>();
-        Cursor results = db.query(tables[ATTACHMENTS], null, ATTACHMENT_NOTE + " = ?", new String[]{ String.valueOf(noteId) }, null, null, null);
+        Cursor results = db.query(tables[ATTACHMENTS], null, ATTACHMENT_NOTE + " = ?", new String[]{String.valueOf(noteId)}, null, null, null);
 
         if(results.moveToFirst()){
             attachments = new ArrayList<Attachment>(results.getCount());
@@ -335,6 +335,31 @@ public class EraSQLiteOpenHelper extends SQLiteOpenHelper {
         results.close();
         db.close();
         return list;
+    }
+
+    public List<Note> queryNotes(String filter){
+        Log.i("QueryNotes", "filter=" + filter);
+        SQLiteDatabase db = this.getReadableDatabase();
+        //Cursor results = db.query(tables[NOTES], null, NOTE_TITLE + " LIKE '%?%' OR " + NOTE_CONTENT + " LIKE '%?%'", new String[]{ filter, filter }, null, null, null);
+        Cursor results = db.query(tables[NOTES], null, NOTE_TITLE + " LIKE '%" + filter + "%' OR " + NOTE_CONTENT + " LIKE '%" + filter + "%'", null, null, null, null);
+        ArrayList<Note> notes = new ArrayList<>();
+
+        if(results.moveToFirst()){
+            notes = new ArrayList<>(results.getCount());
+
+            while(!results.isAfterLast()){
+                Note n = Note.buildFromCursor(results);
+                n.setCategory(getCategory(results.getInt(3)));
+                n.setAttachments(getNoteAttachments(n.getId()));
+                notes.add(n);
+
+                results.moveToNext();
+            }
+        }
+
+        results.close();
+        db.close();
+        return notes;
     }
 
     /**
