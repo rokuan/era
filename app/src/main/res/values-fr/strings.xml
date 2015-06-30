@@ -18,6 +18,7 @@
     <string name="note_category_attribute">Catégorie</string>
     <string name="note_content_attribute">Contenu</string>
     <string name="note_attachments_attribute">Pièces jointes</string>
+    <string name="note_informations_section">Informations</string>
 
     <string name="category_name_attribute">Nom</string>
     <string name="category_browse_icon">Parcourir ...</string>
@@ -28,4 +29,6 @@
     <string name="action_cancel">Annuler</string>
     <string name="action_edit">Editer</string>
     <string name="action_search">Rechercher</string>
+    <string name="action_favorite">Favori</string>
+    <string name="action_delete">Supprimer</string>
 </resources>

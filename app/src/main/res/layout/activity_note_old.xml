@@ -4,112 +4,120 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
-        android:padding="5dp"
+        android:padding="10dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TableLayout
-            android:scrollbars="vertical"
-            android:orientation="vertical" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:stretchColumns="1">
-            <TableRow
-                android:padding="5dp" android:minHeight="40dp" android:gravity="center_vertical">
-                <TextView
-                    android:text="Title"
-                    android:gravity="center_vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <!-- <EditText
-                    android:id="@+id/form_note_title"
-                    android:layout_margin="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" /> -->
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/form_note_title"
-                    android:layout_margin="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </TableRow>
-            <TableRow>
-                <View
-                    android:layout_span="2"
-                    android:layout_margin="5dp"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray"/>
-            </TableRow>
-            <TableRow android:minHeight="40dp" android:gravity="center_vertical"
-                android:padding="5dp">
-                <!-- <TextView
-                    android:text="Category"
-                    android:gravity="center_vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" /> -->
-                <!-- <Spinner
-                    android:id="@+id/form_note_category"
-                    android:layout_margin="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:dropDownSelector="@color/light_indigo"
-                    android:spinnerMode="dropdown"
-                    ></Spinner> -->
-                <!-- <fr.ganfra.materialspinner.MaterialSpinner
-                    android:id="@+id/form_note_category"
-                    app:ms_floatingLabelText="Category"
-                    app:ms_baseColor="@color/light_indigo"
-                    app:ms_highlightColor="@color/indigo"
-                    app:ms_arrowColor="@color/dark_indigo"
-                    app:ms_arrowSize="16dp"
-                    app:ms_floatingLabelColor="@color/dark_indigo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" /> -->
-            </TableRow>
-            <TableRow>
-                <View
-                    android:layout_span="2"
-                    android:layout_margin="5dp"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray"/>
-            </TableRow>
-            <TableRow
-                android:padding="5dp">
-                <TextView android:text="Content" android:layout_span="2" />
-            </TableRow>
-            <TableRow
-                android:padding="5dp">
-                <rokuan.com.eranote.additionalviews.LinedEditText
-                    android:id="@+id/form_note_content"
-                    android:textColor="#000000"
-                    android:padding="5dp"
-                    android:singleLine="false"
-                    android:lines="5"
-                    android:layout_span="2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </TableRow>
-            <TableRow>
-                <View
-                    android:layout_span="2"
-                    android:layout_margin="5dp"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray"/>
-            </TableRow>
-        </TableLayout>
-        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_span="2" android:gravity="center_vertical">
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:padding="15dp" android:layout_span="2" android:text="Attachments" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/NoteItemSection"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/note_informations_section"
+                android:textSize="@dimen/label_size"
+                android:textColor="#FFFFFF"
+                />
+        </LinearLayout>
+        <!-- <com.rey.material.widget.EditText
+            android:hint="@string/note_title_attribute"
+            style="@style/Material.Widget.EditText"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            app:et_inputId="@+id/form_note_title"
+            app:et_supportMode="charCounter"
+            app:et_supportMaxChars="30"
+            app:et_supportTextColor="@color/light_indigo"
+            app:et_supportTextErrorColor="#FF0000"
+            app:et_dividerColor="@color/light_indigo"
+            app:et_dividerErrorColor="#FF0000"
+            app:et_labelTextColor="@color/indigo"
+            app:et_labelTextSize="@dimen/label_size"
+            app:et_labelEnable="true" /> -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:hintTextAppearance="@style/FloatingLabel">
+            >
+            <EditText
+                android:id="@+id/form_note_title"
+                android:hint="@string/note_title_attribute"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                />
+        </android.support.design.widget.TextInputLayout>
+        <!-- <com.rey.material.widget.Spinner
+            android:id="@+id/form_note_category"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            style="@style/Material.Widget.Spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:spn_labelEnable="true"
+            app:spn_dividerColor="@color/light_indigo"
+            app:spn_label="@string/note_category_attribute"
+            app:spn_labelTextSize="@dimen/label_size"
+            app:spn_labelTextColor="@color/indigo"
+            app:spn_arrowColor="@color/indigo" /> -->
+        <android.widget.Spinner
+            android:id="@+id/form_note_category"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <!-- <com.rey.material.widget.EditText
+            style="@style/Material.Widget.EditText"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:minLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/note_content_attribute"
+            app:et_dividerColor="@color/light_indigo"
+            app:et_labelEnable="true"
+            app:et_labelTextSize="@dimen/label_size"
+            app:et_labelTextColor="@color/indigo"
+            app:et_inputId="@+id/form_note_content"/> -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:hintTextAppearance="@style/FloatingLabel"
+            >
+            <EditText
+                android:id="@+id/form_note_content"
+                android:minLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/note_content_attribute" />
+        </android.support.design.widget.TextInputLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:theme="@style/NoteItemSection"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal" >
+            <TextView android:textColor="#FFFFFF" android:textSize="@dimen/label_size" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/note_attachments_attribute" />
             <ImageButton
                 android:id="@+id/form_note_add_attachment"
-                android:src="@drawable/ic_action_new_attachment_holo_dark"
+                android:src="@drawable/ic_action_new_attachment"
                 android:scaleType="fitCenter"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
         </LinearLayout>
         <ListView
             android:id="@+id/form_note_attachments"
-            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </ListView>

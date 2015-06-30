@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/edit_note"
         android:icon="@drawable/ic_menu_edit"
-        android:title="Edit" />
+        android:title="@string/action_edit" />
 
     <item android:id="@+id/favorite_note"
         android:icon="@drawable/star_big_off"
-        android:title="Set/remove as favorite" />
+        android:title="@string/action_favorite" />
 
     <item android:id="@+id/delete_note"
         android:icon="@drawable/ic_menu_delete"
-        android:title="Delete" />
+        android:title="@string/action_delete" />
 </menu>

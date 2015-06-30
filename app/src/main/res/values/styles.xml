@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <!-- <style name="AppTheme" parent="Theme.AppCompat">
@@ -18,28 +18,39 @@
     </style> -->
     <style name="AppTheme"
         parent="Theme.AppCompat">
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item tools:targetApi="11" name="android:actionBarStyle">@style/MyActionBar</item>
 
         <item name="actionBarStyle">@style/MyActionBar</item>
     </style>
 
     <style name="AppTheme.Light"
         parent="Theme.AppCompat.Light">
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <!-- <item tools:targetApi="11" name="android:actionBarStyle">@style/MyActionBar</item> -->
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:windowContentOverlay">@null</item>
 
-        <item name="actionBarStyle">@style/MyActionBar</item>
+        <item tools:targetApi="21" name="android:colorPrimary">@color/indigo</item>
+        <item tools:targetApi="21" name="android:colorPrimaryDark">@color/dark_indigo</item>
+        <item tools:targetApi="21" name="android:colorAccent">@color/light_indigo</item>
+
+        <!-- <item name="actionBarStyle">@style/MyActionBar</item> -->
+        <item name="colorPrimary">@color/indigo</item>
+        <item name="colorPrimaryDark">@color/dark_indigo</item>
+        <item name="colorAccent">@color/light_indigo</item>
     </style>
 
     <!-- ActionBar styles -->
     <style name="MyActionBar"
         parent="Widget.AppCompat.ActionBar">
-        <item name="android:titleTextStyle">@style/ActionBarColor</item>
-        <item name="android:background">@color/dark_indigo</item>
-        <item name="android:logo">@drawable/action_bar_logo</item>
+        <item tools:targetApi="11" name="android:titleTextStyle">@style/ActionBarColor</item>
+        <!-- <item name="android:background">@color/dark_indigo</item> -->
+        <item name="android:background">@color/indigo</item>
+        <item tools:targetApi="11" name="android:logo">@drawable/action_bar_logo</item>
         <!-- <item name="android:icon">@drawable/era_note</item> -->
         <!-- Support library compatibility -->
         <item name="titleTextStyle">@style/ActionBarColor</item>
-        <item name="background">@color/dark_indigo</item>
+        <!-- <item name="background">@color/dark_indigo</item> -->
+        <item name="background">@color/indigo</item>
         <item name="logo">@drawable/action_bar_logo</item>
         <!-- <item name="icon">@drawable/era_note</item> -->
     </style>
@@ -73,6 +84,18 @@
     <style name="EraHelpToggle">
         <item name="android:background">@drawable/era_toggle_button</item>
         <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
+    </style>
+
+    <style name="FloatingLabel" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/light_indigo</item>
+    </style>
+
+    <style name="NoteItemSection">
+        <item name="android:background">@color/indigo</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColorPrimary">#000000</item>
     </style>
 </resources>
 

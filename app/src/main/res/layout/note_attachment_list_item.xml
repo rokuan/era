@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:layout_height="match_parent"
+    android:minHeight="50dp"
     android:gravity="center_vertical">
-    <rokuan.com.eranote.additionalviews.HeightSquareImageView
+    <!-- <rokuan.com.eranote.additionalviews.HeightSquareImageView
         android:id="@+id/note_attachment_list_image"
         android:src="@drawable/file_icon"
         android:scaleType="fitCenter"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_margin="5dp" />
+        android:layout_margin="5dp" /> -->
     <TextView
         android:id="@+id/note_attachment_list_name"
         android:text="Textview for a note attachment item"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:ellipsize="marquee"
         android:gravity="center_vertical"
         android:singleLine="true"
@@ -23,8 +23,8 @@
         android:layout_weight="1" />
     <ImageButton
         android:id="@+id/note_attachment_list_delete"
-        android:src="@android:drawable/ic_menu_delete"
+        android:src="@drawable/ic_delete_black_24dp"
+        android:background="@null"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp" />
+        android:layout_height="wrap_content" />
 </LinearLayout>

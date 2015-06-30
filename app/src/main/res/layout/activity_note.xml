@@ -1,73 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
-        android:padding="10dp"
+        android:background="@color/indigo"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <com.rey.material.widget.EditText
-            android:hint="@string/note_title_attribute"
-            style="@style/Material.Widget.EditText"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="50dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            app:et_inputId="@+id/form_note_title"
-            app:et_supportMode="charCounter"
-            app:et_supportMaxChars="30"
-            app:et_supportTextColor="@color/light_indigo"
-            app:et_supportTextErrorColor="#FF0000"
-            app:et_dividerColor="@color/light_indigo"
-            app:et_dividerErrorColor="#FF0000"
-            app:et_labelTextColor="@color/indigo"
-            app:et_labelTextSize="@dimen/label_size"
-            app:et_labelEnable="true" />
-        <com.rey.material.widget.Spinner
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            app:hintTextAppearance="@style/FloatingLabel">
+            >
+            <EditText
+                android:id="@+id/form_note_title"
+                android:hint="@string/note_title_attribute"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                />
+        </android.support.design.widget.TextInputLayout>
+        <Spinner
             android:id="@+id/form_note_category"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            style="@style/Material.Widget.Spinner"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:spn_labelEnable="true"
-            app:spn_dividerColor="@color/light_indigo"
-            app:spn_label="@string/note_category_attribute"
-            app:spn_labelTextSize="@dimen/label_size"
-            app:spn_labelTextColor="@color/indigo"
-            app:spn_arrowColor="@color/indigo" />
-        <com.rey.material.widget.EditText
-            style="@style/Material.Widget.EditText"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:minLines="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/note_content_attribute"
-            app:et_dividerColor="@color/light_indigo"
-            app:et_labelEnable="true"
-            app:et_labelTextSize="@dimen/label_size"
-            app:et_labelTextColor="@color/indigo"
-            app:et_inputId="@+id/form_note_content"/>
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical">
-            <TextView android:textColor="@color/indigo" android:textSize="@dimen/label_size" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/note_attachments_attribute" />
-            <ImageButton
-                android:id="@+id/form_note_add_attachment"
-                android:src="@drawable/ic_action_new_attachment"
-                android:scaleType="fitCenter"
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
-        </LinearLayout>
-        <ListView
-            android:id="@+id/form_note_attachments"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </ListView>
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            app:hintTextAppearance="@style/FloatingLabel">
+            <EditText
+                android:id="@+id/form_note_content"
+                android:minLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/note_content_attribute" />
+        </android.support.design.widget.TextInputLayout>
     </LinearLayout>
-</ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:background="@color/indigo"
+        android:orientation="horizontal" >
+        <TextView android:textColor="#FFFFFF" android:textSize="@dimen/label_size" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/note_attachments_attribute" />
+    </LinearLayout>
+    <ListView
+        android:id="@+id/form_note_attachments"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    </ListView>
+    <!-- <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="right"
+        android:layout_height="wrap_content"> -->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/form_note_add_attachment"
+        android:src="@drawable/ic_attach_file_white_36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        app:fabSize="normal" />
+    <!-- </LinearLayout> -->
+</LinearLayout>

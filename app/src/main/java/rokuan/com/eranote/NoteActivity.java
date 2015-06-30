@@ -17,20 +17,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.rey.material.widget.Spinner;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import rokuan.com.eranote.db.Attachment;
 import rokuan.com.eranote.db.Category;
 import rokuan.com.eranote.db.EraSQLiteOpenHelper;
@@ -40,7 +39,9 @@ import rokuan.com.eranote.db.Note;
  * An activity to edit the content of a specific note
  * @author Lebeau Christophe
  */
-public class NoteActivity extends AppCompatActivity implements View.OnClickListener {
+public class NoteActivity extends AppCompatActivity
+        //implements View.OnClickListener
+        {
     private EraSQLiteOpenHelper db;
 
     @InjectView(R.id.form_note_title) protected EditText noteTitle;
@@ -92,7 +93,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
 
         ButterKnife.inject(this);
 
-        findViewById(R.id.form_note_add_attachment).setOnClickListener(this);
+        //findViewById(R.id.form_note_add_attachment).setOnClickListener(this);
 
         List<Category> allCategories = db.queryCategories(null);
         categoryAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, allCategories);
@@ -106,7 +107,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
         noteContent.setText(note.getContent());
 
         noteCategory.setAdapter(categoryAdapter);
-        /*noteCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        noteCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Category cat = categoryAdapter.getItem(position);
@@ -117,17 +118,17 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });*/
-        noteCategory.setOnItemClickListener(new Spinner.OnItemClickListener() {
+        });
+        /*noteCategory.setOnItemClickListener(new Spinner.OnItemClickListener() {
             @Override
             public boolean onItemClick(Spinner spinner, View view, int i, long l) {
                 Category cat = categoryAdapter.getItem(i);
                 note.setCategory(cat);
                 return true;
             }
-        });
+        });*/
 
-        refreshListViewHeight();
+        //refreshListViewHeight();
 
         if(note.getCategory() == null){
             try {
@@ -184,7 +185,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
         this.setResult(Activity.RESULT_OK, resultIntent);
     }
 
-    @Override
+    /*@Override
     public void onClick(View v) {
         switch(v.getId()){
             //case R.id.note_new_attachment:
@@ -201,6 +202,19 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
                     //Log.e("Era - Note", "No activity can handle picking a file. Showing alternatives.");
                 }
                 break;
+        }
+    }*/
+
+    @OnClick(R.id.form_note_add_attachment)
+    public void addNewAttachment(){
+        Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        fileIntent.setType("gagt/sdf");
+        try {
+            startActivityForResult(fileIntent, Code.PICK_ATTACHMENT_RESULT_CODE);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "No suitable application found to pick a file", Toast.LENGTH_SHORT).show();
+            // TODO: afficher une dialog qui indique qu'il faut une application
+            //Log.e("Era - Note", "No activity can handle picking a file. Showing alternatives.");
         }
     }
 
@@ -225,7 +239,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
                     /*note.getAttachments().add(attachment);*/
                     /*attachmentAdapter.notifyDataSetChanged();*/
                     attachmentAdapter.add(attachment);
-                    refreshListViewHeight();
+                    //refreshListViewHeight();
                 }
                 break;
         }
@@ -276,7 +290,7 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void refreshListViewHeight(){
+    /*private void refreshListViewHeight(){
         int totalItemsHeight = 0;
         int itemsCount = attachmentAdapter.getCount();
 
@@ -294,5 +308,5 @@ public class NoteActivity extends AppCompatActivity implements View.OnClickListe
         params.height = totalItemsHeight + totalDividersHeight;
         attachmentsList.setLayoutParams(params);
         attachmentsList.requestLayout();
-    }
+    }*/
 }

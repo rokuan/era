@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.rey.material.widget.EditText
+    <!-- <com.rey.material.widget.EditText
         android:hint="@string/category_name_attribute"
         android:layout_margin="10dp"
         style="@style/Material.Widget.EditText"
@@ -14,7 +15,23 @@
         app:et_labelTextSize="@dimen/label_size"
         app:et_labelTextColor="@color/dark_indigo"
         app:et_dividerColor="@color/light_indigo"
-        app:et_labelEnable="true" />
+        app:et_labelEnable="true" /> -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:hintTextAppearance="@style/FloatingLabel"
+        >
+        <EditText
+            android:id="@+id/form_category_name"
+            android:textColor="#000000"
+            android:textColorHint="#7F7F7F"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/category_name_attribute" />
+    </android.support.design.widget.TextInputLayout>
     <LinearLayout
         android:orientation="vertical"
         android:gravity="center_horizontal"
